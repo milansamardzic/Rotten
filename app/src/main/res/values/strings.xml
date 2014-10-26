@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">RottenTomatoMovie</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">Rotten Tomatoes Movies</string>
+    <string name="title_section1">Top Box Office</string>
+    <string name="title_section2">Top Comming Soon</string>
+    <string name="title_section3">Opening This Week</string>
+    <string name="title_section4">In Theaters</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+
+
+    <string-array name="items">
+        <item>Box Office</item>
+        <item>Comming Soon</item>
+        <item>Opening Movies</item>
+        <item>In Theaters</item>
+    </string-array>
+
+    <string-array name="country">
+        <item>BiH</item>
+        <item>Serbia</item>
+        <item>Croatia</item>
+        <item>Macedonia</item>
+        <item>Bulgaria</item>
+        <item>Greece</item>
+        <item>Italy</item>
+        <item>Russia</item>
+    </string-array>
+
+
 
 </resources>
