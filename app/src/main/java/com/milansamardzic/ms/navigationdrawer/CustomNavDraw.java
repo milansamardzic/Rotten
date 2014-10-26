@@ -1,4 +1,4 @@
-package com.milansamardzic.ms.rottentomatomovie;
+package com.milansamardzic.ms.navigationdrawer;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.milansamardzic.ms.rottentomatomovie.R;
+
 /**
  * Created by ms on 10/25/14.
 */
@@ -18,7 +20,7 @@ import android.widget.Toast;
 public class CustomNavDraw extends BaseAdapter {
 
     private Context context;
-    String[] opt;
+    public String[] opt;
     int[] images = {R.drawable.box_office,
             R.drawable.comming_soon,
             R.drawable.opening_movies,

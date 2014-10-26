@@ -2,8 +2,6 @@ package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -12,15 +10,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.os.Bundle;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import static com.milansamardzic.ms.rottentomatomovie.R.id.mainContent;
+import com.milansamardzic.ms.navigationdrawer.CustomNavDraw;
 
 /**
  * Created by ms on 10/25/14.
@@ -30,7 +24,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
   private ActionBarDrawerToggle drawerListener;
   private DrawerLayout drawerLayout;
   private ListView listView;
-  private  CustomNavDraw customNavDraw;
+  private CustomNavDraw customNavDraw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
