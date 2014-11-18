@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarThumbVertical="@drawable/custom_scroll_style">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="250dp">
+             <RelativeLayout
+                android:id="@+id/aboutHeder"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="#ce5043"
+                android:gravity="center">
+
+
+                 <ImageView
+                     android:id="@+id/splashscreen"
+                     android:layout_width="150dp"
+                     android:layout_height="150dp"
+                     android:gravity="center"
+                     android:onClick="Animate"
+                     android:background="@drawable/angry_ico"/>
+
+             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/middlePart"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/aboutHeder"
+                android:layout_height="250dp"
+                android:background="#ce5043"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/abutLogoA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/abh_logo_main"
+                    android:layout_alignParentTop="true"
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+ </RelativeLayout>

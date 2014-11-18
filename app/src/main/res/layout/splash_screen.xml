@@ -4,25 +4,15 @@
     android:layout_height="fill_parent"
     android:background="#3A9425"
     android:layout_gravity="center"
-    android:paddingTop="90dp"
+    android:gravity="center"
     android:weightSum="1">
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginBottom="130dp"
-        android:text="LOADING"/>
 
     <ImageView
         android:id="@+id/splashscreen"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:gravity="center"
-        android:background="@drawable/rotten_ico"
-        android:layout_margin="30dp" />
+        android:background="@drawable/angry_ico"/>
 
 
 </RelativeLayout>

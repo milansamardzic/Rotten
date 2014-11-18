@@ -11,21 +11,21 @@
     <FrameLayout
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" > </FrameLayout>
+        android:layout_height="match_parent" >
+    </FrameLayout>
     
     <ListView
         android:id="@+id/drawerList"
-        android:background="#dedede"
-        android:divider="@android:color/black"
+        android:background="#fff"
         android:color="#000"
         android:dividerHeight="1dp"
-        android:layout_width="240dp"
+        android:fadeScrollbars="true"
+        android:animateLayoutChanges="true"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="left">
 
-        </ListView>
-
-
+    </ListView>
 
 
 </android.support.v4.widget.DrawerLayout>

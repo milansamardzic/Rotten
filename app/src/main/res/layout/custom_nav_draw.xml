@@ -4,20 +4,23 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dedede"
-    android:weightSum="1">
+    android:background="#fff"
+    android:weightSum="1"
+    >
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="52dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:padding="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center"
         />
     <TextView
         android:id="@+id/textView1"
         android:drawSelectorOnTop="true"
         android:layout_width="fill_parent"
-        android:textColor="#000"
+        android:textColor="#141414"
         android:background="?android:attr/activatedBackgroundIndicator"
         android:textAllCaps="true"
         android:fontFamily="sans-serif-medium"

@@ -21,10 +21,17 @@ public class CustomNavDraw extends BaseAdapter {
 
     private Context context;
     public String[] opt;
-    int[] images = {R.drawable.box_office,
+    int[] images = {
+            R.drawable.home,
+            R.drawable.box_office,
             R.drawable.comming_soon,
             R.drawable.opening_movies,
-            R.drawable.in_theaters};
+            R.drawable.in_theaters,
+            R.drawable.favs,
+            R.drawable.search,
+            R.drawable.settings,
+            R.drawable.feedback,
+            R.drawable.about,};
 
 
     public CustomNavDraw(Context context){

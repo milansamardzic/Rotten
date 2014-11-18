@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="140dp"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:fontFamily="sans-serif-light"
+    android:background="#fefefe">
+
+    <com.milansamardzic.ms.RemoteImageView
+        android:id="@id/image"
+        android:layout_width="90dp"
+        android:layout_height="130dp"
+        android:adjustViewBounds="false"
+        android:src="@drawable/large_movie_poster"
+        android:scaleType="fitXY"
+        android:layout_alignParentLeft="true" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:paddingLeft="95dp">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:fontFamily="sans-serif"
+        android:paddingBottom="15dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="#141414"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/tvYearTitle" />
+
+    <TextView
+        android:id="@+id/tvYearTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#85afbf"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="5dp"
+        android:text="(1800)"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:layout_alignParentRight="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/relativeLayout"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/tvTitle">
+
+        <TextView
+            android:id="@+id/tvDateLabel"
+            android:text="Relese: "
+            android:fontFamily="sans-serif-light"
+
+            android:textSize="16sp"
+            android:textColor="#141414"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:layout_toLeftOf="@+id/mocni_rendzer" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:text="January 01"
+        android:textSize="16sp"
+        android:textColor="#85afbf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:layout_toRightOf="@+id/tvDateLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Runtime: "
+        android:id="@+id/runtimeLabel"
+        android:fontFamily="sans-serif-light"
+        android:ellipsize="end"
+        android:textSize="16sp"
+        android:textColor="#141414"
+
+        android:layout_below="@+id/tvDate" />
+
+        <TextView
+            android:fontFamily="sans-serif-light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="150 min"
+            android:ellipsize="end"
+            android:id="@+id/mocni_rendzer"
+            android:textSize="16sp"
+            android:textColor="#85afbf"
+            android:layout_below="@+id/tvDate"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/runtimeLabel" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/runtimeLabel"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/relativeLayout2">
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingbar1"
+                android:fillViewport="true"
+                android:isIndicator="true"
+                android:alpha="0.3"
+                style="@style/CustomRatingBar"
+                android:layout_alignParentLeft="false"
+                />
+
+    </RelativeLayout>
+
+
+        <!--
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/relativeLayout">
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingbar"
+                    android:fillViewport="true"
+                    android:isIndicator="true"
+                    android:alpha="0.3"
+                    style="@style/CustomRatingBar"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout> -->
+
+  </RelativeLayout>
+</RelativeLayout>
+
+</RelativeLayout>

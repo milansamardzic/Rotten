@@ -2,12 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '20.0.0'
-
+    buildToolsVersion "20.0.0"
     defaultConfig {
-        applicationId "com.milansamardzic.ms.rottentomatomovie"
-        minSdkVersion 17
-        targetSdkVersion 20
+        applicationId 'com.milansamardzic.ms.rottentomatomovie'
+        minSdkVersion 14
+        targetSdkVersion 16
         versionCode 1
         versionName "1.0"
     }
@@ -17,10 +16,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
-
+repositories {mavenCentral()}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:20.0.+'
     compile 'com.android.support:appcompat-v7:20.0.+'
+    compile files('libs/android-async-http-1.4.3.jar')
+    compile files('libs/picasso-2.1.1.jar')
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile files('libs/android-error-reporter.jar')
+    compile files('libs/trace.jar')
+    compile files('libs/acra-4.5.0.jar')
+    compile files('libs/devsmartlib.jar')
 }

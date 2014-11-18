@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Rotten Tomatoes Movies</string>
-    <string name="title_section1">Top Box Office</string>
-    <string name="title_section2">Top Comming Soon</string>
-    <string name="title_section3">Opening This Week</string>
+    <string name="app_name">Angry tomato</string>
+    <string name="title_section1">Box Office</string>
+    <string name="title_section2">Upcoming Movies</string>
+    <string name="title_section3">Opening Movies</string>
     <string name="title_section4">In Theaters</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="error_reporting_message_hint">What you do!?</string>
 
 
     <string-array name="items">
+        <item>Home</item>
         <item>Box Office</item>
-        <item>Comming Soon</item>
+        <item>Upcoming Movies</item>
         <item>Opening Movies</item>
         <item>In Theaters</item>
+        <item>Favourites</item>
+        <item>Search</item>
+        <item>Settings</item>
+        <item>Feedback</item>
+        <item>About</item>
     </string-array>
 
     <string-array name="country">
         <item>BiH</item>
-        <item>Serbia</item>
-        <item>Croatia</item>
-        <item>Macedonia</item>
-        <item>Bulgaria</item>
-        <item>Greece</item>
         <item>Italy</item>
+        <item>Croatia</item>
+        <item>Greece</item>
+        <item>Bulgaria</item>
+        <item>Macedonia</item>
         <item>Russia</item>
+        <item>Serbia</item>
     </string-array>
 
 

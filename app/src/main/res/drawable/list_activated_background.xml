@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+    <item android:state_activated="true" android:drawable="@color/abc_search_url_text_holo" />
+    <item android:state_checked="true" android:drawable="@color/abc_search_url_text_holo" />
+    <item android:state_pressed="true" android:drawable="@color/abc_search_url_text_holo" />
+    <item android:drawable="@android:color/transparent" />
+</selector>

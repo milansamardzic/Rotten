@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:textColor="#fff"
     android:choiceMode="singleChoice"
-    android:alpha="0.7"
+    android:background="?android:attr/activatedBackgroundIndicator"
     android:textSize="20sp"
     android:gravity="center_vertical"
     android:paddingStart="20sp"

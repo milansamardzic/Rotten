@@ -1,53 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="200dp"
-        android:layout_height="200dp" >
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:foregroundGravity="center"
+        >
 
-            <LinearLayout
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:background="#fff"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:gravity="center">
+        <LinearLayout
+            android:id="@+id/linearni"
+            android:layout_width="150dp"
 
-                <!-- Card Contents go here -->
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:orientation="vertical"
+            android:background="@android:drawable/dialog_frame" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp"
+                android:gravity="center|bottom">
+
+                <com.milansamardzic.ms.RemoteImageView
+                    android:id="@+id/image"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:minWidth="150dp"
+                    android:minHeight="100dp"
+                    android:src="@drawable/small_movie_poster"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true" />
 
                 <TextView
                     android:layout_width="fill_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:fontFamily="sans-serif"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColorHighlight="#fff"
+                    android:textSize="12sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Title"
+                    android:gravity="center|bottom"
+                    android:id="@+id/tvTitleGV"
+                    android:textColor="#efefef"
+                    android:layout_below="@+id/image" />
 
-                    android:layout_marginLeft="0dp"
-                    android:text="aaaa"
-                    android:gravity="center"
-                    android:id="@+id/textView"
-                    android:textColor="#000"
-                    android:layout_gravity="bottom" />
-
-
-                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="0dp"
-                    android:id="@+id/imageView"
-                    android:src="@drawable/rotten_ico"
-                     android:layout_gravity="center" />
-
-
-
+            <TextView
+                android:id="@+id/bookmarkYear"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:alpha="0.7"
+                android:visibility="gone"
+                android:background="@drawable/bookmark"
+                android:text="2014"
+                android:fontFamily="sans-serif"
+                android:textColor="#efefef"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginTop="-25dp"
+                android:layout_marginRight="-20dp"
+                android:layout_alignParentRight="true" />
+            </RelativeLayout>
 
             </LinearLayout>
     </FrameLayout>
 
 </RelativeLayout>
 
+
+                <!-- Card Contents go here -->
