@@ -14,5 +14,13 @@
         android:gravity="center"
         android:background="@drawable/angry_ico"/>
 
+    <TextView
+        android:id="@+id/tvLoad"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textColor="#000"
+        android:text="0"
+        android:gravity="center"/>
+
 
 </RelativeLayout>

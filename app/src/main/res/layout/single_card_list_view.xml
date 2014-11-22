@@ -8,6 +8,27 @@
     android:fontFamily="sans-serif-light"
     android:background="#fefefe">
 
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout"
+        android:gravity="center_vertical"
+        android:paddingLeft="95dp"
+        android:layout_alignBottom="@+id/relativeLayout4"
+        android:layout_below="@+id/linearLayout3">
+
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:id="@+id/ratingbar1"
+            android:isIndicator="true"
+            android:alpha="0.7"
+            style="@style/CustomRatingBar"
+            android:layout_alignParentLeft="true" />
+    </RelativeLayout>
+
     <com.milansamardzic.ms.RemoteImageView
         android:id="@id/image"
         android:layout_width="90dp"
@@ -16,27 +37,52 @@
         android:src="@drawable/large_movie_poster"
         android:scaleType="fitXY"
         android:layout_alignParentLeft="true" />
+
+
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:paddingLeft="95dp">
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+    android:paddingLeft="95dp"
+    android:id="@+id/relativeLayout4">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:fontFamily="sans-serif"
-        android:paddingBottom="15dp"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textColor="#141414"
-        android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/tvYearTitle" />
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
 
     <TextView
-        android:id="@+id/tvYearTitle"
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:layout_weight="1"
+        android:text="TitleTitleTitleTitleTitleTitleTitle"
+        android:singleLine="true"
+        android:textColor="#141414"
+        android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvYearTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:layout_weight="0"
+            android:text="(1014)"
+            android:textColor="#85afbf"
+            android:fontFamily="sans-serif-light"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#85afbf"
@@ -47,110 +93,80 @@
         android:gravity="left"
         android:layout_alignParentRight="true" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+</RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="95dp"
+        android:id="@+id/linearLayout3"
+        android:layout_centerVertical="true">
 
-        android:id="@+id/relativeLayout"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/tvTitle">
 
+    <LinearLayout
+        android:id="@+id/relLL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout2">
         <TextView
             android:id="@+id/tvDateLabel"
             android:text="Relese: "
             android:fontFamily="sans-serif-light"
-
+            android:layout_below="@+id/tvTitle"
             android:textSize="16sp"
             android:textColor="#141414"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
            android:layout_toLeftOf="@+id/mocni_rendzer" />
 
-    <TextView
-        android:id="@+id/tvDate"
-        android:text="January 01"
-        android:textSize="16sp"
-        android:textColor="#85afbf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:layout_toRightOf="@+id/tvDateLabel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Runtime: "
-        android:id="@+id/runtimeLabel"
-        android:fontFamily="sans-serif-light"
-        android:ellipsize="end"
-        android:textSize="16sp"
-        android:textColor="#141414"
-
-        android:layout_below="@+id/tvDate" />
-
         <TextView
-            android:fontFamily="sans-serif-light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="150 min"
-            android:ellipsize="end"
-            android:id="@+id/mocni_rendzer"
+            android:id="@+id/tvDate"
+            android:text="January 01"
             android:textSize="16sp"
             android:textColor="#85afbf"
-            android:layout_below="@+id/tvDate"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/runtimeLabel" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/runtimeLabel"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/relativeLayout2">
-            <RatingBar
+            android:fontFamily="sans-serif-light"
+            android:layout_toRightOf="@+id/tvDateLabel" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
+        android:layout_alignParentTop="true">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ratingbar1"
-                android:fillViewport="true"
-                android:isIndicator="true"
-                android:alpha="0.3"
-                style="@style/CustomRatingBar"
-                android:layout_alignParentLeft="false"
-                />
+                android:text="Runtime: "
+                android:id="@+id/runtimeLabel"
+                android:fontFamily="sans-serif-light"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:textColor="#141414"
+                android:layout_below="@+id/tvDate" />
 
-    </RelativeLayout>
-
-
-        <!--
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
+            <TextView
+                android:fontFamily="sans-serif-light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="150 min"
+                android:ellipsize="end"
+                android:id="@+id/mocni_rendzer"
+                android:textSize="16sp"
+                android:textColor="#85afbf"
+                android:layout_below="@+id/tvDate"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/relativeLayout">
+                android:layout_toRightOf="@+id/runtimeLabel" />
 
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ratingbar"
-                    android:fillViewport="true"
-                    android:isIndicator="true"
-                    android:alpha="0.3"
-                    style="@style/CustomRatingBar"
-                    android:layout_alignParentLeft="false"
-                    android:layout_alignParentBottom="true" />
-            </RelativeLayout> -->
+    </LinearLayout>
 
-  </RelativeLayout>
-</RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

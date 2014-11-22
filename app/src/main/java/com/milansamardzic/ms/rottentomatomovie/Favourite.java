@@ -1,6 +1,7 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -28,6 +33,7 @@ import static com.milansamardzic.ms.rottentomatomovie.R.layout.*;
  * Created by ms on 11/3/14.
  */
 public class Favourite extends Fragment {
+    private static final int MODE_PRIVATE = 0;
     private ListView lvMovies;
     public MoviesAdapter adapterMovies;
     ArrayList<Movie> listdata;
@@ -40,12 +46,12 @@ public class Favourite extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(movie_list, container, false);
 
-
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
         adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
+
 
         TinyDB tinydb = new TinyDB(getActivity());
         Gson gson = new Gson();
@@ -64,6 +70,23 @@ public class Favourite extends Fragment {
                         //       listdata.add(m);
                         adapterMovies.add(m);
                         Log.d("procitao", m.getTitle() + " " + m.getDuration());
+
+                        SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
+                        SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
+                        Boolean isIt = count.getBoolean("fav", false);
+                        if (isIt == false) {
+                            ViewTarget viewTarget = new ViewTarget(lvMovies);
+                            ShowcaseView showcaseView;
+                            showcaseView = new ShowcaseView.Builder(getActivity())
+                                    .setTarget(viewTarget)
+                                    .setContentTitle("One or Two tap?")
+                                    .setContentText("One tap on each card open detail view, but BE CAREFUL - LONG PRESS DELETE MOVIE FROM LIST")
+                                    .build();
+                            firstTimeOnFav.putBoolean("fav", true);
+                            firstTimeOnFav.apply();
+                        }
+
+
                     }
 
                 }
@@ -76,7 +99,14 @@ public class Favourite extends Fragment {
         return rootView;
     }
 
+
+    public void checkIsFirstTime() {
+
+    }
+
+
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
+
     public void removeFromFavourites() {
             lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 

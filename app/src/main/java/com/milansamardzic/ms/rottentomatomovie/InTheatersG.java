@@ -94,7 +94,7 @@ public class InTheatersG extends Fragment{
             }
         });
     }
-
+    Movie fav;
     public void  setupMovieSelectedLongListener() {
 
         gwTBO.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -103,7 +103,6 @@ public class InTheatersG extends Fragment{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Gson gson = new GsonBuilder().create();
-                Movie fav;
 
                 TinyDB tinydb = new TinyDB(getActivity());
                 String str = tinydb.getString("jsonArray");

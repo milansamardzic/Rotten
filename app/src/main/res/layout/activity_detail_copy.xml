@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e5e5e5"
+    android:isScrollContainer="true"
+    tools:context=".BoxOfficeDetailActivity">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarThumbVertical="@drawable/custom_scroll_style"
+        android:fillViewport="false">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/coverImage"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <com.milansamardzic.ms.RemoteImageView
+                    android:id="@+id/ivPosterImage1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="250dp"
+                    android:maxHeight="250dp"
+                    android:background="@drawable/blac_white_gradient"
+                    android:src="@drawable/small_movie_poster"
+                    android:interpolator="@anim/abc_slide_in_bottom"
+                    android:duration="1600"
+                    android:scaleType="centerCrop"
+                    android:alpha="1"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:minWidth="250dp"
+                    android:fadingEdge="horizontal" />
+
+
+                <TextView
+                    android:id="@+id/tvCriticsScore"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif"
+                    android:textSize="16sp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="88%"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:background="@drawable/red_circle" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:alpha="0.9"
+                    android:background="@drawable/blac_white_gradient"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif"
+                        android:textColorHighlight="#ddf435"
+                        android:lines="2"
+                        android:ellipsize="end"
+                        android:textColor="#fff"
+                        android:paddingTop="23dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:textSize="24sp"
+                        android:gravity="left"
+                        android:text="Title"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/middlePart"
+                android:layout_width="130dp"
+                android:layout_height="200dp"
+                android:maxHeight="300dp"
+                android:padding="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="-50dp"
+                android:background="#fff"
+
+                android:layout_below="@+id/coverImage"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true">
+
+                <com.milansamardzic.ms.RemoteImageView
+                    android:background="@android:drawable/dialog_frame"
+                    android:id="@+id/ivPosterImage"
+                    android:layout_width="130dp"
+                    android:layout_height="fill_parent"
+                    android:maxHeight="200dp"
+                    android:src="@drawable/small_movie_poster"
+                    android:scaleType="fitXY"
+                    android:interpolator="@anim/abc_slide_in_bottom"
+                    android:fadingEdge="horizontal"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true" />
+
+                <RelativeLayout
+                    android:id="@+id/tvCastRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cast list"
+                        android:id="@+id/tvCastLabel"
+                        android:textColor="#5567a2"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_marginLeft="140dp"
+                        android:textSize="18sp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:id="@+id/tvCast"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#141414"
+                        android:lines="8"
+                        android:textSize="16dp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_marginLeft="140dp"
+                        android:ellipsize="end"
+                        android:gravity="left"
+                        android:text="Christian Bale, Joseph-Gordon Levitt"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <Button
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/favButton"
+                        android:background="@drawable/favourite_empty"
+                        android:layout_alignTop="@+id/tvCastLabel"
+                        android:layout_alignParentRight="true" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/badge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:background="#fff"
+            android:layout_below="@+id/middlePart"
+            android:layout_alignRight="@+id/middlePart"
+            android:layout_alignLeft="@+id/middlePart">
+
+
+
+            <ImageView
+                android:id="@+id/ivCritichScore"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/tvYearDA"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="2014"
+                android:textColor="#fff"
+                android:fontFamily="sans-serif"
+                android:textSize="9sp"
+                android:gravity="center"
+                android:background="@drawable/green_circle"
+                android:layout_toRightOf="@+id/ivCritichScore"/>
+
+
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/synopsisRL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="5dp"
+                android:background="#fff"
+                android:layout_below="@+id/badge"
+                android:layout_alignRight="@+id/middlePart"
+                android:layout_alignLeft="@+id/middlePart">
+
+                <TextView
+                    android:id="@+id/tvSynopsisLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#5567a2"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Synopsis"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+
+                    <TextView
+                        android:id="@+id/tvSynopsis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#141414"
+                        android:textAlignment="textStart"
+                        android:layout_margin="5dp"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Some story"
+                        android:layout_below="@+id/tvSynopsisLabel"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="125dp"
+                android:background="#fff"
+                android:layout_below="@+id/synopsisRL"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp">
+
+                <TextView
+                    android:id="@+id/tvScoreLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#5567a2"
+                    android:paddingLeft="5dp"
+                    android:textAlignment="textStart"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Score"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Audiance rating"
+                    android:textColor="#141414"
+                    android:id="@+id/tvAudianceRatingLbl"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/tvScoreLabel"
+                    android:fontFamily="sans-serif-light"/>
+
+                <LinearLayout
+                    android:id="@+id/percentAudianceLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/tvAudianceRatingLbl">
+
+                    <TextView
+                        android:id="@+id/percentCriticsA"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="99%"
+                        android:gravity="left"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/progressBarAB"
+                        android:layout_below="@+id/process"
+                        android:layout_alignLeft="@+id/tvTitle"
+                        android:layout_toLeftOf="@+id/tvAudienceScore"
+                        android:animationResolution="@integer/abc_max_action_buttons"
+                        android:background="#efefef"
+                        android:alpha="0.3"
+                        android:progress="@integer/abc_max_action_buttons"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Critics rating"
+                    android:textColor="#141414"
+                    android:id="@+id/tvCriticRatingLbl"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_below="@+id/percentAudianceLL" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/tvCriticRatingLbl">
+
+                <TextView
+                    android:id="@+id/percentCriticsC"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="99%"
+                    android:gravity="left"
+                    android:fontFamily="sans-serif-light"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBarCB"
+                    android:layout_below="@+id/process"
+                    android:layout_alignLeft="@+id/tvTitle"
+                    android:layout_toLeftOf="@+id/tvAudienceScore"
+                    android:animationResolution="@integer/abc_max_action_buttons"
+                    android:background="#efefef"
+                    android:alpha="0.3"
+                    android:progress="@integer/abc_max_action_buttons"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

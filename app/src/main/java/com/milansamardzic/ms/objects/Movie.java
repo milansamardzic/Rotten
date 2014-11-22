@@ -22,6 +22,7 @@ public class Movie implements Serializable {
     private String relaseDate;
     private int duration;
     private int criticsScore;
+    private String mpaaRating;
     private ArrayList<String> castList;
 
     public String getRelaseDate() {
@@ -39,7 +40,7 @@ public class Movie implements Serializable {
             m.largePosterUrl = jsonObject.getJSONObject("posters").getString("detailed");
             m.relaseDate = jsonObject.getJSONObject("release_dates").getString("theater");
             m.duration= jsonObject.getInt("runtime");
-
+            m.mpaaRating = jsonObject.getString("mpaa_rating");
             m.castList = new ArrayList<String>();
             JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
             for (int i = 0; i < abridgedCast.length(); i++) {
@@ -88,6 +89,10 @@ public class Movie implements Serializable {
 
     public String getSynopsis() {
         return synopsis;
+    }
+
+    public String getMpaaRating() {
+        return mpaaRating;
     }
 
 /*    public String getPosterUrl() {

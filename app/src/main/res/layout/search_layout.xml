@@ -9,52 +9,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#ce5043">
+        android:background="#EEE2F1"
+        android:alpha="0.7">
 
-        <EditText
-            android:inputType="text"
-            android:imeOptions="actionSearch"
-            android:layout_width="wrap_content"
-            android:gravity="left|center"
-            android:hint="Search"
-            android:textColorHint="#efefef"
-            android:padding="5dp"
-            android:layout_height="50dp"
-            android:textColor="#efefef"
-            android:id="@+id/searchTerm"
-            android:lines="1"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@color/abc_search_url_text_normal"
-            android:singleLine="true"
-            android:layout_toLeftOf="@+id/search_button_sb"
-            android:layout_toStartOf="@+id/search_button_sb"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textStyle="normal"
-            android:background="#00000000"
-            android:typeface="sans" />
+
 
         <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/search_button_sb"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/abc_ic_search"
             android:id="@+id/search_button_sb"
             android:gravity="right|center"
             android:onClick="searchButton"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:id="@+id/searchTerm"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/search_button_sb"
+            android:layout_alignParentLeft="true"
+            android:hint="Search..."
+            android:gravity="center_vertical|left"
+            android:singleLine="true"
+            android:textColorHint="#ccc"
+            android:inputType="textAutoCorrect|textAutoComplete|text"
+            android:autoText="true"
+            android:textColor="#000"
+            />
 
     </RelativeLayout>
 
-    <ImageView
+    <RelativeLayout
         android:id="@+id/smalyeSearch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/smiley"
-        android:alpha="0.1"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/smiley"
+            android:alpha="0.1"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lvMovies"

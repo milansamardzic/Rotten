@@ -2,6 +2,7 @@ package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -32,6 +36,7 @@ import java.util.ArrayList;
  * Created by ms on 11/4/14.
  */
 public abstract class Sve extends Fragment {
+    private static final int MODE_PRIVATE = 0;
     private ListView lvMovies;
     private MoviesAdapter adapterMovies;
     private RottenTomatoesClient client;
@@ -100,6 +105,23 @@ public abstract class Sve extends Fragment {
                 }
             }
         }, url);
+
+
+        SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
+        Boolean isIt = count.getBoolean("selection-end", false);
+        if (isIt == false) {
+            ViewTarget viewTarget = new ViewTarget(lvMovies);
+            ShowcaseView showcaseView;
+            showcaseView = new ShowcaseView.Builder(getActivity())
+                    .setTarget(viewTarget)
+                    .setContentTitle("One tap")
+                    .setContentText("One tap on each card open detail view")
+                    .build();
+            firstTimeOnFav.putBoolean("selection-end", true);
+            firstTimeOnFav.apply();
+        }
+        
     }
 
 
@@ -129,7 +151,6 @@ public abstract class Sve extends Fragment {
                 TinyDB tinydb = new TinyDB(getActivity());
                 String str = tinydb.getString("jsonArray");
                 int helper=0;
-
 
                         JSONArray jsonA = null;
                         try {

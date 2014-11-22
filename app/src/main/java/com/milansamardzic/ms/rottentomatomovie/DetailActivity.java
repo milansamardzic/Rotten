@@ -2,13 +2,19 @@ package com.milansamardzic.ms.rottentomatomovie;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -27,12 +37,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import static android.graphics.Color.parseColor;
 
-public class DetailActivity extends ActionBarActivity implements View.OnClickListener {
+public class DetailActivity extends ActionBarActivity {
     private ImageView ivPosterImage;
     private ImageView ivPosterImage1;
     private ImageView ivCritichScore;
@@ -47,13 +60,12 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
     private ProgressBar pgCB;
     private ActionBarDrawerToggle drawerListener;
     private FragmentManager fm;
-    private Button btn;
     private Movie movie;
     private Movie fav;
     private String str;
     private Gson gson;
     private TinyDB tinydb;
-
+    public int changeIcon = 0;
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
 
     @SuppressLint("NewApi")
@@ -69,9 +81,7 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
         bar.setBackgroundDrawable(new ColorDrawable(parseColor("#ce5043"))); //3A9425
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().getCustomView();
-        btn = (Button) findViewById(R.id.favButton);
 
-      //  Button btn = (Button) findViewById(R.id.favButton);
         ivPosterImage = (ImageView) findViewById(R.id.ivPosterImage);
         ivPosterImage1 = (ImageView) findViewById(R.id.ivPosterImage1);
         ivCritichScore = (ImageView) findViewById(R.id.ivCritichScore);
@@ -86,16 +96,43 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
         // Load movie data
         pgAB = (ProgressBar) findViewById(R.id.progressBarAB);
         pgCB = (ProgressBar) findViewById(R.id.progressBarCB);
+
+        pgCB.getProgressDrawable().setColorFilter(parseColor("#F79A36"), PorterDuff.Mode.SRC_IN);
+        pgAB.getProgressDrawable().setColorFilter(parseColor("#5DB6C9"), PorterDuff.Mode.SRC_IN);
+
         Movie movie = (Movie) getIntent().getSerializableExtra(Sve.MOVIE_DETAIL_KEY);
 //        BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(TopBoxOffice.MOVIE_DETAIL_KEY);
 
-        btn.setOnClickListener(this);
 
         loadMovie(movie);
     }
 
-    public Movie ee;
 
+    public void checkIsFirstTime() {
+        SharedPreferences.Editor firstTimeOnDetail= getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences count = getPreferences(MODE_PRIVATE);
+        Boolean isIt = count.getBoolean("first", false);
+        if (isIt == false) {
+            ActionItemTarget target = new ActionItemTarget(this, R.id.action_settings);
+            ShowcaseView sv = new ShowcaseView.Builder(this)
+                    .setTarget(target)
+                    .setContentTitle("Favourite")
+                    .setContentText("Select star to add or remove movie from your favourites")
+                    .doNotBlockTouches()
+                    .build();
+            firstTimeOnDetail.putBoolean("first", true);
+            firstTimeOnDetail.apply();
+        }
+    }
+
+
+
+    public Movie ee;
+    public int progressStatusAudience = -1;
+    public int progressStatusCritics = -1;
+    private Handler handler = new Handler();
+    int progressStatusAudienceMax = 0;
+    int progressStatusCriticsMax = 0;
     @SuppressLint("NewApi")
     public void loadMovie(Movie movie) {
         ee = movie;
@@ -103,26 +140,75 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
             getActionBar().setTitle(movie.getTitle());
         }
         tvTitle.setText(movie.getTitle());
-        pgAB.setProgress(movie.getAudienceScore());
-        pgCB.setProgress(movie.getCriticsScore());
+
+
+        //pgAB.setProgress(movie.getAudienceScore());
+        progressStatusAudienceMax = movie.getAudienceScore();
+        progressStatusCriticsMax = movie.getCriticsScore();
+        new Thread(new Runnable() {
+            public void run() {
+                while (progressStatusAudience < progressStatusAudienceMax || progressStatusCritics  < progressStatusCriticsMax) {
+
+                    if(progressStatusAudience<progressStatusAudienceMax){
+                     progressStatusAudience += 1;}
+
+                    if(progressStatusCritics<progressStatusCriticsMax){
+                      progressStatusCritics +=1;}
+
+                    handler.post(new Runnable() {
+                        public void run() {
+                            pgAB.setProgress(progressStatusAudience);
+                            pgCB.setProgress(progressStatusCritics);
+                            tvAudienceScore.setText(progressStatusAudience + "%");
+                            tvCriticsScore.setText(progressStatusCritics + "%");
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+
+
+    //   pgAB.setProgress(movie.getAudienceScore());
+    //    pgCB.setProgress(movie.getCriticsScore());
         String year = String.valueOf(movie.getYear());
 
         if (movie.getCriticsScore() >= 75) {
             ivCritichScore.setImageDrawable(getResources().getDrawable(R.drawable.c_img_fresh));
         } else if (movie.getCriticsScore() < 50) {
             ivCritichScore.setImageDrawable(getResources().getDrawable(R.drawable.c_img_bad));
-        } else if (movie.getCriticsScore() >= 60 && movie.getCriticsScore() < 75) {
+        } else if (movie.getCriticsScore() >= 50 && movie.getCriticsScore() < 75) {
             ivCritichScore.setImageDrawable(getResources().getDrawable(R.drawable.c_img_god));
         }
 
-        tvYear.setText(year);
 
-        String criticsScore = String.valueOf(movie.getCriticsScore());
-        String audianceScore = String.valueOf(movie.getAudienceScore());
-        tvAudienceScore.setText(audianceScore + "%");
-        tvCriticsScore.setText(criticsScore + "%");
+
+        String dateString = movie.getRelaseDate().toString();
+
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
+        Date date = null;
+        try {
+            date = fmt.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat fmtOut = new SimpleDateFormat("dd MMMM yy");
+    //    tvYear.setText(fmtOut.format(date).toString());
+
+        tvYear.setText(year + " | " + movie.getDuration() + " min | " + movie.getMpaaRating());
+
+        // String criticsScore = String.valueOf(movie.getCriticsScore());
+        // String audianceScore = String.valueOf(movie.getAudienceScore());
+        // tvAudienceScore.setText(audianceScore + "%");
+        // tvCriticsScore.setText(criticsScore + "%");
+
         String cast;
-
         cast = movie.getCastList().replaceAll(", ", "\n\n• ");
         tvCast.setText("• " + cast);
 
@@ -141,7 +227,8 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
         for (int e = 0; e < mojaLista.size(); e++) {
             Log.d("State", movie.getTitle());
             if (mojaLista.get(e).getTitle().contentEquals(movie.getTitle())) {
-                btn.setBackground(getResources().getDrawable(R.drawable.favourite_full));
+                changeIcon = 1;
+              //  btn.setBackground(getResources().getDrawable(R.drawable.favourite_full));
                 Log.d("State", "true");
             }
         }
@@ -154,15 +241,59 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
         return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det"); //_org
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //.navigateUpFromSameTask(this);
-                super.onBackPressed();
-        }
-        return false;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_activity_menu, menu);
+        checkIsFirstTime();
+        if (changeIcon==1){
+        menu.findItem(R.id.action_settings).setIcon(R.drawable.favourite_full); }
+        return super.onCreateOptionsMenu(menu);
     }
 
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()) {
+            case R.id.action_settings:
+           //     item.setIcon(R.drawable.favourite_full);
+            {
+                        int helper = 0;
+                        openSharedPreferences();
+                        readJSON();
+                        for (int e = 0; e < mojaLista.size(); e++) {
+                            if (mojaLista.get(e).getTitle().contentEquals(ee.getTitle())) {
+                                //delete
+                                mojaLista.remove(e);
+                                JsonArray jsonArray = gson.toJsonTree(mojaLista).getAsJsonArray();
+                                tinydb = new TinyDB(this);
+                                tinydb.putString("jsonArray", jsonArray.toString());
+                                Toast.makeText(this, "Movie is deleted", Toast.LENGTH_SHORT).show();
+                                item.setIcon(R.drawable.favourite_empty);
+                              //  btn.setBackground(getResources().getDrawable(R.drawable.favourite_empty));
+                                //delete
+                                helper = 1;
+                            }
+                        }
+                        if (helper == 0) {
+                            fav = ee;
+                            mojaLista.add(fav);
+                            JsonArray jsonArraySave = gson.toJsonTree(mojaLista).getAsJsonArray();
+                            tinydb = new TinyDB(this);
+                            tinydb.putString("jsonArray", jsonArraySave.toString());
+                            item.setIcon(R.drawable.favourite_full);
+                            //btn.setBackground(getResources().getDrawable(R.drawable.favourite_full));
+                            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+                            Log.d("State", "saved");
+                        }
+                }
+
+                break;
+            case android.R.id.home:
+                    super.onBackPressed();
+                    break;
+            }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void openSharedPreferences() {
         gson = new GsonBuilder().create();
@@ -187,37 +318,7 @@ public class DetailActivity extends ActionBarActivity implements View.OnClickLis
             e.printStackTrace();
         }
     }
-//delete from list
-    @SuppressLint("NewApi")
-    @Override
-    public void onClick(View v) {
-        int helper = 0;
-        openSharedPreferences();
-        readJSON();
-        for (int e = 0; e < mojaLista.size(); e++) {
-                if (mojaLista.get(e).getTitle().contentEquals(ee.getTitle())) {
-                    //delete
-                    mojaLista.remove(e);
-                    JsonArray jsonArray = gson.toJsonTree(mojaLista).getAsJsonArray();
-                    tinydb = new TinyDB(this);
-                    tinydb.putString("jsonArray", jsonArray.toString());
-                    Toast.makeText(this, "Movie is deleted", Toast.LENGTH_SHORT).show();
-                    btn.setBackground(getResources().getDrawable(R.drawable.favourite_empty));
-                    //delete
-                    helper = 1;
-                }
-            }
-        if (helper == 0) {
-            fav = ee;
-            mojaLista.add(fav);
-            JsonArray jsonArraySave = gson.toJsonTree(mojaLista).getAsJsonArray();
-            tinydb = new TinyDB(this);
-            tinydb.putString("jsonArray", jsonArraySave.toString());
-            btn.setBackground(getResources().getDrawable(R.drawable.favourite_full));
-            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-            Log.d("State", "saved");
-        }
-    }
+
 
 }
 

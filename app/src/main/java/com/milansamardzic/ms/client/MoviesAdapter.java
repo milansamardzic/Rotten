@@ -43,7 +43,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         //---relase date---//
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
-        tvDate.setText(movie.getRelaseDate());
+       // tvDate.setText(movie.getRelaseDate());
         String dateString = movie.getRelaseDate().toString();
 
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
@@ -53,10 +53,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-       SimpleDateFormat fmtOut = new SimpleDateFormat("MMMM dd");
-       //return fmtOut.format(date);
-
+        SimpleDateFormat fmtOut = new SimpleDateFormat("MMMM dd");
         tvDate.setText(fmtOut.format(date).toString());
 
         //---runtime---//
