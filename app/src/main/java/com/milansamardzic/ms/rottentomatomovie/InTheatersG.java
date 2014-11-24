@@ -55,7 +55,7 @@ public class InTheatersG extends Fragment{
 
         fetchMovies(ll);
         setupMovieSelectedListener();
-        setupMovieSelectedLongListener();
+        //setupMovieSelectedLongListener();
 
         return rootView;
     }
@@ -94,7 +94,10 @@ public class InTheatersG extends Fragment{
             }
         });
     }
+
+   /*depricated
     Movie fav;
+
     public void  setupMovieSelectedLongListener() {
 
         gwTBO.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -154,7 +157,7 @@ public class InTheatersG extends Fragment{
         });
 
     }
-
+ */
 
 
 

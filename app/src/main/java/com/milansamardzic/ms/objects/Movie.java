@@ -138,4 +138,19 @@ public class Movie implements Serializable {
         }
     }
 
+
+
+    public void populateFromRecent(JSONObject jsonObject1)
+    {
+        try {
+            this.title = jsonObject1.getString("title");
+            this.year = jsonObject1.getInt("year");
+            this.largePosterUrl = jsonObject1.getString("largePosterUrl");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

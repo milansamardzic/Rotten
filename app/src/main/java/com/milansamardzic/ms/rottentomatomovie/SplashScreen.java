@@ -20,6 +20,7 @@ public class SplashScreen extends Activity {
     private final int SPLASH_DISPLAY_LENGTH = 1000;
     public TextView tvLoad;
     public int i=0;
+    private Handler handler = new Handler();
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
@@ -31,14 +32,21 @@ public class SplashScreen extends Activity {
         animationTarget.startAnimation(animation);
 
         tvLoad =(TextView) findViewById(R.id.tvLoad);
-
         new Thread(new Runnable() {
             public void run() {
                 while (i < 100) {
 
-                    i +=1;
+                    i += 1;
 
-                    Handler handler = null;
+                    if(i==100){
+
+                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        SplashScreen.this.finish();
+
+                    }
+
+
                     handler.post(new Runnable() {
                         public void run() {
                             tvLoad.setText(i + "%");
@@ -46,8 +54,9 @@ public class SplashScreen extends Activity {
                     });
 
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(15);
                     } catch (InterruptedException e) {
+
                         e.printStackTrace();
                     }
                 }
@@ -56,7 +65,7 @@ public class SplashScreen extends Activity {
 
 
 
-
+/*
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
@@ -65,6 +74,6 @@ public class SplashScreen extends Activity {
                 SplashScreen.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
-    }
+*/    }
 
 }

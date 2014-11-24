@@ -7,7 +7,7 @@ android {
         applicationId 'com.milansamardzic.ms.rottentomatomovie'
         minSdkVersion 14
         targetSdkVersion 16
-        versionCode 2
+        versionCode 3
         versionName "1.0"
     }
     buildTypes {
@@ -32,4 +32,5 @@ dependencies {
     compile files('libs/acra-4.5.0.jar')
     compile files('libs/devsmartlib.jar')
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
+    compile 'org.lucasr.twowayview:twowayview:0.1.4'
 }

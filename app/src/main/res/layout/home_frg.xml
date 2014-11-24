@@ -5,49 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentStart="true"
-    android:background="#e5e5e5"
-    android:padding="5dp">
+    android:background="#e5e5e5">
 
-<!--
-    <ListView
-        android:id="@+id/lvMovies"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        android:minHeight="100dp"
-        android:layout_alignParentBottom="true"
-        android:rotation="-90"
-        android:scrollbarStyle="outsideOverlay"
-        android:smoothScrollbar="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:scrollbarSize="10dp"
-        android:scrollbarThumbVertical="@drawable/custom_scroll_style">
-    </ListView>
+    <RelativeLayout
+        android:id="@+id/mainRL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
--->
-
-
-
-<LinearLayout
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:visibility="gone">
-
-    <ImageView
-        android:id="@+id/splashscreen"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:gravity="center"
-        android:onClick="Animate"
-        android:background="@drawable/angry_ico"/>
+            <org.lucasr.twowayview.TwoWayView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/lvItemsBox"
+                style="@style/TwoWayView"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@drawable/background_shelf"
+                android:drawSelectorOnTop="false"
+                tools:context=".MainActivity" />
 
 
-</LinearLayout>
 
+        <org.lucasr.twowayview.TwoWayView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/lvItemsRecent"
+            style="@style/TwoWayView"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@drawable/background_shelf"
+            android:drawSelectorOnTop="false"
+            android:layout_below="@+id/lvItemsBox"
+            tools:context=".MainActivity" />
+
+
+
+    </RelativeLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>

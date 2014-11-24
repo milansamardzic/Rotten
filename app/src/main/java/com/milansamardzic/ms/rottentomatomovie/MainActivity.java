@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         customNavDraw = new CustomNavDraw(this);
         listView.setAdapter(customNavDraw);
 
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerListener = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);

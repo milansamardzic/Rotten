@@ -47,7 +47,6 @@ public class Favourite extends Fragment {
         final View rootView = inflater.inflate(movie_list, container, false);
 
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
-        lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
         adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
@@ -108,70 +107,70 @@ public class Favourite extends Fragment {
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
 
     public void removeFromFavourites() {
-            lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    Gson gson = new GsonBuilder().create();
-                    TinyDB tinydb = new TinyDB(getActivity());
-                    String str = tinydb.getString("jsonArray");
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Gson gson = new GsonBuilder().create();
+                TinyDB tinydb = new TinyDB(getActivity());
+                String str = tinydb.getString("jsonArray");
 
-                    if(str!=null){
-                        JSONArray jsonArray = null;
-                        try {
-                            jsonArray = new JSONArray(str);
-                            mojaLista = new ArrayList<Movie>();
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                Movie m = new Movie();
-                                JSONObject object = null;
-                                object = (JSONObject) jsonArray.get(i);
-                                m.populateFrom(object);
-                                mojaLista.add(m);
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                if (str != null) {
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(str);
+                        mojaLista = new ArrayList<Movie>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Movie m = new Movie();
+                            JSONObject object = null;
+                            object = (JSONObject) jsonArray.get(i);
+                            m.populateFrom(object);
+                            mojaLista.add(m);
                         }
 
-                    }else{
-                       // mojaLista.remove(position);
-                       }
-                    mojaLista.remove(position);
-                    JsonArray jsonArray = gson.toJsonTree(mojaLista).getAsJsonArray();
-                    tinydb = new TinyDB(getActivity());
-                    tinydb.putString("jsonArray", jsonArray.toString());
-                    Toast.makeText(getActivity(), "Movie is deleted", Toast.LENGTH_SHORT).show();
 
-                    //-refresh-list-//
-                    adapterMovies.clear();
-                    String strJson = tinydb.getString("jsonArray");
-                    if (strJson != null) {
-                        try {
-                            JSONArray jsonArrayRefresh = new JSONArray(strJson);
-                            //  listdata = new ArrayList<Movie>();
-                            if (jsonArray != null) {
-                                for (int i = 0; i < jsonArrayRefresh.length(); i++) {
-                                    Movie m = new Movie();
-                                    JSONObject object = (JSONObject) jsonArrayRefresh.get(i);
-                                    m.populateFrom(object);
-                                    //       listdata.add(m);
-                                    adapterMovies.add(m);
-                                    Log.d("procitao", m.getTitle() + " " + m.getDuration());
-                                }
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    return false;
+
+                } else {
+                    // mojaLista.remove(position);
                 }
+                mojaLista.remove(position);
+                JsonArray jsonArray = gson.toJsonTree(mojaLista).getAsJsonArray();
+                tinydb = new TinyDB(getActivity());
+                tinydb.putString("jsonArray", jsonArray.toString());
+                Toast.makeText(getActivity(), "Movie is deleted", Toast.LENGTH_SHORT).show();
 
-            });
+                //-refresh-list-//
+                adapterMovies.clear();
+                String strJson = tinydb.getString("jsonArray");
+                if (strJson != null) {
+                    try {
+                        JSONArray jsonArrayRefresh = new JSONArray(strJson);
+                        //  listdata = new ArrayList<Movie>();
+                        if (jsonArray != null) {
+                            for (int i = 0; i < jsonArrayRefresh.length(); i++) {
+                                Movie m = new Movie();
+                                JSONObject object = (JSONObject) jsonArrayRefresh.get(i);
+                                m.populateFrom(object);
+                                //       listdata.add(m);
+                                adapterMovies.add(m);
+                                Log.d("procitao", m.getTitle() + " " + m.getDuration());
+                            }
 
-        }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+
+        });
+
+    }
 
 }

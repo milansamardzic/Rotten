@@ -111,7 +111,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:background="#E91E63"
+                android:background="#B71C1C"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/ivCastBack" />
 
@@ -126,6 +126,8 @@
                 android:textSize="26sp"
                 android:fontFamily="sans-serif-light"
                 android:text="Cast"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_alignBottom="@+id/ivCastBack"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentRight="true"
@@ -176,7 +178,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:background="#67EBB6"
+                    android:background="#3F51B5"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/imageView"
                     android:layout_alignParentRight="true" />
@@ -206,8 +208,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:lineSpacingExtra="3dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Some story"
+                    android:text="Some story Some storySome storySome storySome storySome storySome storySome story "
                     android:layout_below="@+id/imageView"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
@@ -256,7 +261,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="wrap_content"
                                 android:text="99%"
-                                android:textColor="#5DB6C9"
+                                android:textColor="#3F51B5"
                                 android:gravity="left"
                                 android:textSize="20sp"
                                 android:fontFamily="sans-serif-light"/>
@@ -265,7 +270,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Aud. rate"
-                                android:textColor="#5DB6C9"
+                                android:textColor="#3F51B5"
                                 android:id="@+id/tvAudianceRatingLbl"
                                 android:textSize="9sp"
 
@@ -322,7 +327,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="99%"
                                 android:textSize="20sp"
-                                android:textColor="#F79A36"
+                                android:textColor="#B71C1C"
                                 android:gravity="left"
                                 android:fontFamily="sans-serif-light"
                                 android:layout_alignTop="@+id/relativeLayout2"
@@ -334,7 +339,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Crit. rate"
                                 android:textSize="9sp"
-                                android:textColor="#F79A36"
+                                android:textColor="#B71C1C"
                                 android:id="@+id/tvCriticRatingLbl"
                                 android:fontFamily="sans-serif-light"
                                 android:layout_below="@+id/percentCriticsC"

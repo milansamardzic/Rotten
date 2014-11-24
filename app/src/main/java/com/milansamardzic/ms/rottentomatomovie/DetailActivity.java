@@ -62,11 +62,20 @@ public class DetailActivity extends ActionBarActivity {
     private FragmentManager fm;
     private Movie movie;
     private Movie fav;
-    private String str;
+    private String str, strOfRecent;
     private Gson gson;
     private TinyDB tinydb;
     public int changeIcon = 0;
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
+    public ArrayList<Movie> mojaListaOfRecent = new ArrayList<Movie>();
+public Movie ppom;
+    public Movie ee;
+    public int progressStatusAudience = -1;
+    public int progressStatusCritics = -1;
+    private Handler handler = new Handler();
+    int progressStatusAudienceMax = 0;
+    int progressStatusCriticsMax = 0;
+
 
     @SuppressLint("NewApi")
     @Override
@@ -96,13 +105,15 @@ public class DetailActivity extends ActionBarActivity {
         // Load movie data
         pgAB = (ProgressBar) findViewById(R.id.progressBarAB);
         pgCB = (ProgressBar) findViewById(R.id.progressBarCB);
+//F79A36
+//5DB6C9
+        pgCB.getProgressDrawable().setColorFilter(parseColor("#B71C1C"), PorterDuff.Mode.SRC_IN);
+        pgAB.getProgressDrawable().setColorFilter(parseColor("#3F51B5"), PorterDuff.Mode.SRC_IN);
 
-        pgCB.getProgressDrawable().setColorFilter(parseColor("#F79A36"), PorterDuff.Mode.SRC_IN);
-        pgAB.getProgressDrawable().setColorFilter(parseColor("#5DB6C9"), PorterDuff.Mode.SRC_IN);
 
         Movie movie = (Movie) getIntent().getSerializableExtra(Sve.MOVIE_DETAIL_KEY);
-//        BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(TopBoxOffice.MOVIE_DETAIL_KEY);
 
+        Log.d("film", Sve.MOVIE_DETAIL_KEY);
 
         loadMovie(movie);
     }
@@ -125,14 +136,6 @@ public class DetailActivity extends ActionBarActivity {
         }
     }
 
-
-
-    public Movie ee;
-    public int progressStatusAudience = -1;
-    public int progressStatusCritics = -1;
-    private Handler handler = new Handler();
-    int progressStatusAudienceMax = 0;
-    int progressStatusCriticsMax = 0;
     @SuppressLint("NewApi")
     public void loadMovie(Movie movie) {
         ee = movie;
@@ -233,7 +236,6 @@ public class DetailActivity extends ActionBarActivity {
             }
         }
 
-
     }
 
     public String fixAPI(String brokenImageLink) {
@@ -318,7 +320,6 @@ public class DetailActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
-
 
 }
 

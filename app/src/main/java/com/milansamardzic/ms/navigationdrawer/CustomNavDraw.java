@@ -61,7 +61,6 @@ public class CustomNavDraw extends BaseAdapter {
         if(convertView == null){
              LayoutInflater inflater = (LayoutInflater) context
                      .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             row = inflater.inflate(R.layout.custom_nav_draw, parent, false);
         }else{
              row=convertView;

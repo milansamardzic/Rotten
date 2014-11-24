@@ -58,7 +58,7 @@ public abstract class Sve extends Fragment {
         String ll = link();
         fetchMovies(ll);
         setupMovieSelectedListener();
-        setupMovieSelectedLongListener();
+    //    setupMovieSelectedLongListener();
 
         return rootView;
     }
@@ -130,14 +130,14 @@ public abstract class Sve extends Fragment {
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
-
+                recentList(position);
                 Intent i = new Intent(getActivity(), DetailActivity.class);
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
                 startActivity(i);
             }
         });
     }
-
+//del idiote!
     public void  setupMovieSelectedLongListener() {
 
         lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -145,48 +145,6 @@ public abstract class Sve extends Fragment {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Gson gson = new GsonBuilder().create();
-                Movie fav;
-
-                TinyDB tinydb = new TinyDB(getActivity());
-                String str = tinydb.getString("jsonArray");
-                int helper=0;
-
-                        JSONArray jsonA = null;
-                        try {
-                            jsonA = new JSONArray(str);
-                            mojaLista = new ArrayList<Movie>();
-                            for (int j = 0; j < jsonA.length(); j++) {
-                                Movie m = new Movie();
-                                JSONObject object = null;
-                                object = (JSONObject) jsonA.get(j);
-                                m.populateFrom(object);
-                                mojaLista.add(m);
-                                Log.d("State", "reading");
-                            }
-
-                            for(int e=0; e<mojaLista.size(); e++)
-                            {
-                                if(mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())){
-                                    Toast.makeText(getActivity(), "Already in favourite", Toast.LENGTH_SHORT).show();
-                                    Log.d("State", "true"); helper=1;
-
-                                }
-                            }
-
-
-                    } catch (JSONException e) { e.printStackTrace();}
-
-                if(helper==0) {
-                    fav = movies.get(position);
-                    mojaLista.add(fav);
-                    JsonArray jsonArraySave = gson.toJsonTree(mojaLista).getAsJsonArray();
-                    tinydb = new TinyDB(getActivity());
-                    tinydb.putString("jsonArray", jsonArraySave.toString());
-                    Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
-                    Log.d("State", "saved");
-
-                }
 
                 return false;
             }
@@ -194,6 +152,57 @@ public abstract class Sve extends Fragment {
         });
 
     }
+ //---
+
+
+    public void recentList(int position) {
+        Gson gson = new GsonBuilder().create();
+        Movie fav;
+
+        TinyDB tinydb = new TinyDB(getActivity());
+        String str = tinydb.getString("jsonArrayRecent");
+        int helper = 0;
+
+        JSONArray jsonA = null;
+        try {
+            jsonA = new JSONArray(str);
+            mojaLista = new ArrayList<Movie>();
+            for (int j = 0; j < jsonA.length(); j++) {
+                Movie m = new Movie();
+                JSONObject object = null;
+                object = (JSONObject) jsonA.get(j);
+                m.populateFrom(object);
+                mojaLista.add(m);
+                Log.d("State", "reading");
+            }
+
+            for (int e = 0; e < mojaLista.size(); e++) {
+
+                if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
+                    Toast.makeText(getActivity(), "Already in favourite", Toast.LENGTH_SHORT).show();
+                    Log.d("State", "true");
+                    helper = 1;
+
+                }
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (helper == 0) {
+            fav = movies.get(position);
+            mojaLista.add(fav);
+            JsonArray jsonArraySave = gson.toJsonTree(mojaLista).getAsJsonArray();
+            tinydb = new TinyDB(getActivity());
+            tinydb.putString("jsonArrayRecent", jsonArraySave.toString());
+            Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
+            Log.d("State", "saved");
+
+        }
+    }
+
 
 }
 

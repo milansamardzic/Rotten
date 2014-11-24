@@ -8,19 +8,25 @@
     android:weightSum="1">
 
     <ImageView
+
         android:id="@+id/splashscreen"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:gravity="center"
-        android:background="@drawable/angry_ico"/>
+        android:background="@drawable/angry_ico"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="105dp" />
 
     <TextView
         android:id="@+id/tvLoad"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:fontFamily="sans-serif-light"
         android:text="0"
-        android:gravity="center"/>
+        android:layout_below="@+id/splashscreen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
 
 
 </RelativeLayout>
