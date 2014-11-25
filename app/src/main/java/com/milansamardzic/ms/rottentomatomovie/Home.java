@@ -70,31 +70,12 @@ public class Home extends Fragment{
                 startActivity(i);
             }
         });
-
-        TinyDB tinydb = new TinyDB(getActivity());
-        Gson gson = new Gson();
-        Log.d("test", tinydb.getString("jsonArray"));
-
-        String strJson = tinydb.getString("jsonArray");
-        if (strJson != null) {
-            try {
-                JSONArray jsonArray = new JSONArray(strJson);
-                //  listdata = new ArrayList<Movie>();
-                if (jsonArray != null) {
-                    for (int i = 0; i < 5; i++) {
-                        Movie m = new Movie();
-                        JSONObject object = (JSONObject) jsonArray.get(i);
-                        m.populateFrom(object);
-                        adapterMovies.add(m);
-                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
-                    }
-
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+            //--favourite--//
+            TinyDB tinydb = new TinyDB(getActivity());
+            Gson gson = new Gson();
+            String strJson = tinydb.getString("jsonArray");
+            fetch(strJson);
+            //--------//
 
         TwoWayView twvRecent = (TwoWayView) rootView.findViewById(R.id.lvItemsRecent);
         ArrayList<Movie> eMovies = new ArrayList<Movie>();
@@ -116,7 +97,27 @@ public class Home extends Fragment{
         return rootView;
     }
 
+    public void fetch(String strJson){
+        if (strJson != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(strJson);
+                //  listdata = new ArrayList<Movie>();
+                if (jsonArray != null) {
+                    for (int i =jsonArray.length()-1; i > jsonArray.length()-6; i--) {
+                        Movie m = new Movie();
+                        JSONObject object = (JSONObject) jsonArray.get(i);
+                        m.populateFrom(object);
+                        adapterMovies.add(m);
+                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
+                    }
 
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void checkIsFirstTime() {
         SharedPreferences.Editor firstTimeOnHome = this.getActivity().getPreferences(MODE_PRIVATE).edit();
@@ -134,30 +135,13 @@ public class Home extends Fragment{
         }
     }
 
-    public void recentSeen(){
+    public void recentSeen() {
 
         TinyDB tinydb = new TinyDB(getActivity());
         Gson gson = new Gson();
         Log.d("test", tinydb.getString("jsonArrayRecent"));
-
         String strJson = tinydb.getString("jsonArrayRecent");
-        if (strJson != null) {
-            try {
-                JSONArray jsonArray = new JSONArray(strJson);
-                if (jsonArray != null) {
-                    for (int i = 0; i <  jsonArray.length(); i++) {
-                        Movie m = new Movie();
-                        JSONObject object = (JSONObject) jsonArray.get(i);
-                        m.populateFrom(object);
-                        adapterMovies.add(m);
-                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        fetch(strJson);
+
     }
-
-
 }

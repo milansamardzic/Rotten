@@ -272,7 +272,6 @@ public class Favourite extends Fragment {
 
                             }
                         });
-
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -283,12 +282,9 @@ public class Favourite extends Fragment {
                         ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
                         lvMovies.setVisibility(View.VISIBLE);
                         load.setVisibility(View.GONE);
-
                     }
                 });
-            }
-
-            ;
+            };
         };
         thread.start();
     }
