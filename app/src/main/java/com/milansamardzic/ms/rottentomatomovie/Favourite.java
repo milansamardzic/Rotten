@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -42,6 +43,8 @@ public class Favourite extends Fragment {
     public static final String MOVIE_DETAIL_KEY = "movie";
     ArrayList<String> titlee;
     Movie m;
+    ProgressBar load;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class Favourite extends Fragment {
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
         adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
-
+        ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
         loadData();
 
         removeFromFavourites();
@@ -81,6 +84,9 @@ public class Favourite extends Fragment {
                         //       listdata.add(m);
                         adapterMovies.add(m);
                         Log.d("procitao", m.getTitle() + " " + m.getDuration() + m.getLargePosterUrl());
+
+
+                        waitToLoad();
 
                         SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
                         SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
@@ -248,5 +254,45 @@ public class Favourite extends Fragment {
         });
 
     }
+
+
+    public  void waitToLoad(){
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(500);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
+                                load.setVisibility(View.VISIBLE);
+
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
+                        lvMovies.setVisibility(View.VISIBLE);
+                        load.setVisibility(View.GONE);
+
+                    }
+                });
+            }
+
+            ;
+        };
+        thread.start();
+    }
+
+
 
 }

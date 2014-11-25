@@ -46,13 +46,11 @@ public class SplashScreen extends Activity {
 
                     }
 
-
                     handler.post(new Runnable() {
                         public void run() {
                             tvLoad.setText(i + "%");
                         }
                     });
-
                     try {
                         Thread.sleep(15);
                     } catch (InterruptedException e) {

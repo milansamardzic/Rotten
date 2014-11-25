@@ -1,18 +1,25 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +42,7 @@ import java.util.ArrayList;
 /**
  * Created by ms on 11/4/14.
  */
-public abstract class Sve extends Fragment {
+public abstract class Sve extends Fragment{
     private static final int MODE_PRIVATE = 0;
     private ListView lvMovies;
     private MoviesAdapter adapterMovies;
@@ -44,7 +51,11 @@ public abstract class Sve extends Fragment {
     SwipeRefreshLayout swipeLayout;
     Button btnNxt;
     TinyDB tinydb;
+    ProgressBar load;
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
+
+    public int i=0;
+    private Handler handler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,15 +63,55 @@ public abstract class Sve extends Fragment {
         final View rootView = inflater.inflate(R.layout.movie_list, container, false);
 
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
+        load = (ProgressBar) rootView.findViewById(R.id.pbLoad);
+
+      waitToLoad();
+
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
         adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
         String ll = link();
         fetchMovies(ll);
         setupMovieSelectedListener();
-    //    setupMovieSelectedLongListener();
+        //    setupMovieSelectedLongListener();
 
         return rootView;
+    }
+
+    public  void waitToLoad(){
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(500);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                load.setVisibility(View.VISIBLE);
+
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvMovies.setVisibility(View.VISIBLE);
+                        load.setVisibility(View.GONE);
+
+                    }
+                });
+            }
+
+            ;
+        };
+        thread.start();
     }
 
     public abstract String link();
@@ -76,7 +127,7 @@ public abstract class Sve extends Fragment {
         }, 2000);
     }
 
-//    String url;// = "lists/movies/box_office.json";
+    //    String url;// = "lists/movies/box_office.json";
     ArrayList<Movie> movies;
     public void fetchMovies(String nestoo) {
         String url = nestoo;
@@ -130,7 +181,7 @@ public abstract class Sve extends Fragment {
         });
     }
 
-//del idiote!
+    //del idiote!
     public void  setupMovieSelectedLongListener() {
 
         lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -145,7 +196,7 @@ public abstract class Sve extends Fragment {
         });
 
     }
- //---
+    //---
 
 
     public void recentList(int position) {
