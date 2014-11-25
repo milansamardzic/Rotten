@@ -1,6 +1,7 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class Favourite extends Fragment {
 
     public static final String MOVIE_DETAIL_KEY = "movie";
     ArrayList<String> titlee;
-
+    Movie m;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,6 +52,17 @@ public class Favourite extends Fragment {
         adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
 
+        loadData();
+
+        removeFromFavourites();
+
+        setupMovieSelectedListener();
+
+
+        return rootView;
+    }
+
+    public void loadData(){
 
         TinyDB tinydb = new TinyDB(getActivity());
         Gson gson = new Gson();
@@ -63,12 +75,12 @@ public class Favourite extends Fragment {
                 //  listdata = new ArrayList<Movie>();
                 if (jsonArray != null) {
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        Movie m = new Movie();
+                        m = new Movie();
                         JSONObject object = (JSONObject) jsonArray.get(i);
                         m.populateFrom(object);
                         //       listdata.add(m);
                         adapterMovies.add(m);
-                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
+                        Log.d("procitao", m.getTitle() + " " + m.getDuration() + m.getLargePosterUrl());
 
                         SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
                         SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
@@ -84,8 +96,79 @@ public class Favourite extends Fragment {
                             firstTimeOnFav.putBoolean("fav", true);
                             firstTimeOnFav.apply();
                         }
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
 
+    }
+
+    private void setupMovieSelectedListener() {
+        lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
+                Intent i = new Intent(getActivity(), DetailActivity.class);
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                startActivity(i);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+         refreshList();
+    }
+
+    private void refreshList() {
+
+        Gson gson = new GsonBuilder().create();
+        TinyDB tinydb = new TinyDB(getActivity());
+        String str = tinydb.getString("jsonArray");
+
+        if (str != null) {
+            JSONArray jsonArray = null;
+            try {
+                jsonArray = new JSONArray(str);
+                mojaLista = new ArrayList<Movie>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Movie m = new Movie();
+                    JSONObject object = null;
+                    object = (JSONObject) jsonArray.get(i);
+                    m.populateFrom(object);
+                    mojaLista.add(m);
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+        }
+        JsonArray jsonArray = gson.toJsonTree(mojaLista).getAsJsonArray();
+        tinydb = new TinyDB(getActivity());
+        tinydb.putString("jsonArray", jsonArray.toString());
+
+        //-refresh-list-//
+        adapterMovies.clear();
+        String strJson = tinydb.getString("jsonArray");
+        if (strJson != null) {
+            try {
+                JSONArray jsonArrayRefresh = new JSONArray(strJson);
+                //  listdata = new ArrayList<Movie>();
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArrayRefresh.length(); i++) {
+                        Movie m = new Movie();
+                        JSONObject object = (JSONObject) jsonArrayRefresh.get(i);
+                        m.populateFrom(object);
+                        //       listdata.add(m);
+                        adapterMovies.add(m);
+                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
                     }
 
                 }
@@ -94,15 +177,8 @@ public class Favourite extends Fragment {
                 e.printStackTrace();
             }
         }
-        removeFromFavourites();
-        return rootView;
-    }
-
-
-    public void checkIsFirstTime() {
 
     }
-
 
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
 

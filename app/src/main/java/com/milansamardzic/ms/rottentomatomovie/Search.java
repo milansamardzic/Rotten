@@ -59,7 +59,6 @@ public class Search extends Fragment{
         lvMovies.setAdapter(adapterMovies);
 
         setupMovieSelectedListener();
-        setupMovieSelectedLongListener();
 
         Button btn = (Button) rootView.findViewById(R.id.search_button_sb);
         tvSearch = (EditText) rootView.findViewById(R.id.searchTerm);
@@ -170,22 +169,4 @@ public class Search extends Fragment{
 
     }
 
-    private void  setupMovieSelectedLongListener() {
-        lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String ime = movies.get(position).getTitle();
-                Toast.makeText(getActivity(), "Naslov:\n"+ ime, Toast.LENGTH_LONG).show();
-
-                //   Intent i = new Intent(getActivity(), MainActivity.class);
-                //  i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
-                // startActivity(i);
-                return false;
-            }
-
-        });
-
-    }
 }

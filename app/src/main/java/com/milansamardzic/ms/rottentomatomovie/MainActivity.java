@@ -3,15 +3,19 @@ package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,12 +31,16 @@ import android.widget.Toast;
 
 import com.milansamardzic.ms.RemoteImageView;
 import com.milansamardzic.ms.navigationdrawer.CustomNavDraw;
+import com.milansamardzic.ms.objects.Movie;
 
 
 import org.acra.annotation.ReportsCrashes;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Random;
 
 import static android.graphics.Color.parseColor;
@@ -75,6 +83,9 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+       // Integer i = (Integer) getIntent().getSerializableExtra(String.valueOf(DetailActivity.fragmentNumber));
+       // Log.d("fragment", String.valueOf(i));
     }
 
     @Override
@@ -149,7 +160,25 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
 
     }
 
+    public boolean isConnectedToInternet() {
+       ConnectivityManager connectivity = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+           if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+           if (info != null)
+            for (int i = 0; i < info.length; i++)
+           if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+            return true;
+           }
+
+           }
+       return false;
+       }
+
+
+
+
     public void selectItem(int position) {
+        boolean con =isConnectedToInternet();
         listView.setItemChecked(position, true);
         setTitle(customNavDraw.opt[position]);
 
@@ -163,42 +192,50 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
                 fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
                 break;
             case 1:
+
+                if (con == true){
                 selected = new BoxOffice();
-                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
-                //  Intent intent = new Intent(this, BoxOfficeActivity.class);
-                // startActivity(intent);
+                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
+                else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
             case 2:
-                selected = new UpcomingSoon();
-                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                if (con == true){
+                    selected = new UpcomingSoon();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
+                else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
             case 3:
-                selected = new OpeningMovies();
-                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                if (con == true){
+                    selected = new OpeningMovies();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
+                else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
             case 4:
-                selected =new InTheatersG();
-                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                if (con == true){
+                    selected =new InTheatersG();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
+                else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
             case 5:
                 selected = new Favourite();
                 fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
                 break;
             case 6:
-                selected = new Search();
-                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                if (con == true){
+                    selected = new Search();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
+                else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
             case 8:
-                selected = new Feedback();
-                fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                if (con == true){
+                    selected = new Feedback();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
+                else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
-
             case 9:
                 selected = new About();
                 fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
                 break;
         }
-
     }
-
 }

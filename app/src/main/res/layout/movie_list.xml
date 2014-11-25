@@ -21,7 +21,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:scrollbarSize="10dp"
-        android:scrollbarThumbVertical="@drawable/custom_scroll_style">
+        android:scrollbarThumbVertical="@drawable/custom_scroll_style"
+        android:visibility="invisible">
     </ListView>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

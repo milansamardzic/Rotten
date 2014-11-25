@@ -75,7 +75,7 @@ public class About extends Fragment implements View.OnClickListener{
         String url = nestoo;
         imgV.setEnabled(false);
         Random rand = new Random();
-        final int  n = rand.nextInt(50) + 1;
+        final int  n = rand.nextInt(40) + 1;
         final ArrayList<Movie> testLista = new ArrayList<Movie>();
         client = new RottenTomatoesClient();//
         client.getMovies(new JsonHttpResponseHandler() {
@@ -88,11 +88,7 @@ public class About extends Fragment implements View.OnClickListener{
 
                     movies = Movie.fromJson(items);
                     Movie movie;
-
-
-                  //  for (Movie movie : movies) {
                         adapterMovies.add( movies.get(n));
-                  //  }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

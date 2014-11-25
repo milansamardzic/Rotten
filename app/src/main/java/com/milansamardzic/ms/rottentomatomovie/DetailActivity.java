@@ -1,7 +1,9 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -31,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.milansamardzic.ms.RemoteImageView;
+import com.milansamardzic.ms.client.MoviesAdapter;
 import com.milansamardzic.ms.objects.Movie;
 
 import org.json.JSONArray;
@@ -46,6 +49,7 @@ import java.util.Random;
 import static android.graphics.Color.parseColor;
 
 public class DetailActivity extends ActionBarActivity {
+    public static Integer fragmentNumber=5;
     private ImageView ivPosterImage;
     private ImageView ivPosterImage1;
     private ImageView ivCritichScore;
@@ -148,6 +152,9 @@ public Movie ppom;
         //pgAB.setProgress(movie.getAudienceScore());
         progressStatusAudienceMax = movie.getAudienceScore();
         progressStatusCriticsMax = movie.getCriticsScore();
+
+        Log.d("rrr", String.valueOf(movie.getAudienceScore()));
+
         new Thread(new Runnable() {
             public void run() {
                 while (progressStatusAudience < progressStatusAudienceMax || progressStatusCritics  < progressStatusCriticsMax) {
@@ -192,9 +199,9 @@ public Movie ppom;
 
 
 
-        String dateString = movie.getRelaseDate().toString();
+//d        String dateString = movie.getRelaseDate().toString();
 
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
+/*d        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
         Date date = null;
         try {
             date = fmt.parse(dateString);
@@ -203,11 +210,11 @@ public Movie ppom;
         }
         SimpleDateFormat fmtOut = new SimpleDateFormat("dd MMMM yy");
     //    tvYear.setText(fmtOut.format(date).toString());
-
+*/
         tvYear.setText(year + " | " + movie.getDuration() + " min | " + movie.getMpaaRating());
 
         // String criticsScore = String.valueOf(movie.getCriticsScore());
-        // String audianceScore = String.valueOf(movie.getAudienceScore());
+         //String audianceScore = String.valueOf(movie.getAudienceScore());
         // tvAudienceScore.setText(audianceScore + "%");
         // tvCriticsScore.setText(criticsScore + "%");
 
@@ -215,7 +222,8 @@ public Movie ppom;
         cast = movie.getCastList().replaceAll(", ", "\n\n• ");
         tvCast.setText("• " + cast);
 
-        tvSynopsis.setText(Html.fromHtml(movie.getSynopsis()));
+        tvSynopsis.setText(movie.getSynopsis());
+        //tvSynopsis.setText(Html.fromHtml(movie.getSynopsis()));
 
         String imageURL = fixAPI(movie.getLargePosterUrl());
 
@@ -240,7 +248,12 @@ public Movie ppom;
 
     public String fixAPI(String brokenImageLink) {
         String imageURL = brokenImageLink;
-        return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det"); //_org
+        if(imageURL.contains("_tmb")) {
+            return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det"); //_org
+        }else{
+            return imageURL;
+        }
+     //   return null;
     }
 
     @Override
@@ -271,6 +284,9 @@ public Movie ppom;
                                 tinydb.putString("jsonArray", jsonArray.toString());
                                 Toast.makeText(this, "Movie is deleted", Toast.LENGTH_SHORT).show();
                                 item.setIcon(R.drawable.favourite_empty);
+
+                             //   refreshList();
+
                               //  btn.setBackground(getResources().getDrawable(R.drawable.favourite_empty));
                                 //delete
                                 helper = 1;
@@ -286,15 +302,46 @@ public Movie ppom;
                             //btn.setBackground(getResources().getDrawable(R.drawable.favourite_full));
                             Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
                             Log.d("State", "saved");
+                            Log.d("State-l",jsonArraySave.toString());
                         }
                 }
 
                 break;
             case android.R.id.home:
-                    super.onBackPressed();
-                    break;
+                   super.onBackPressed();
+              break;
             }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshList() {
+        MoviesAdapter adapterMovies;
+        ArrayList<Movie> aMovies = new ArrayList<Movie>();
+        adapterMovies = new MoviesAdapter(this.getBaseContext(), aMovies);
+        adapterMovies.clear();
+        JSONArray jsonArray = null;
+        String strJson = tinydb.getString("jsonArray");
+        if (strJson != null) {
+            try {
+                JSONArray jsonArrayRefresh = new JSONArray(strJson);
+                //  listdata = new ArrayList<Movie>();
+                if (jsonArray != null) {
+                    for (int i = 0; i < jsonArrayRefresh.length(); i++) {
+                        Movie m = new Movie();
+                        JSONObject object = (JSONObject) jsonArrayRefresh.get(i);
+                        m.populateFrom(object);
+                        //       listdata.add(m);
+                        adapterMovies.add(m);
+                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void openSharedPreferences() {

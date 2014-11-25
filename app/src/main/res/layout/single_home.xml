@@ -6,17 +6,16 @@
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="200dp"
         android:foregroundGravity="center"
-        android:paddingTop="15dp"
-        >
+        android:layout_marginBottom="35dp"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:id="@+id/linearni"
             android:layout_width="120dp"
-            android:layout_height="200dp"
-            android:layout_marginBottom="4dp"
+            android:layout_height="210dp"
             android:orientation="vertical"
             android:background="@android:drawable/dialog_frame" >
 
@@ -28,8 +27,8 @@
 
                 <com.milansamardzic.ms.RemoteImageView
                     android:id="@+id/image"
-                    android:layout_width="120dp"
-                    android:layout_height="150dp"
+                    android:layout_width="140dp"
+                    android:layout_height="170dp"
                     android:minWidth="150dp"
                     android:minHeight="100dp"
                     android:src="@drawable/small_movie_poster"

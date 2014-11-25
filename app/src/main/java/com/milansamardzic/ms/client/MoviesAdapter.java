@@ -75,7 +75,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     public String fixAPI(String brokenImageLink){
         String imageURL = brokenImageLink;
-        return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det");
+       return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det");
     }
 
 

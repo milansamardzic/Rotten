@@ -2,6 +2,7 @@ package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -51,16 +53,23 @@ public class Home extends Fragment{
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.home_frg, container, false);
 
-         checkIsFirstTime();
-
+        checkIsFirstTime();
 
         TwoWayView twv = (TwoWayView) rootView.findViewById(R.id.lvItemsBox);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
 
         adapterMovies = new HomeAdapter(getActivity().getBaseContext(), aMovies);
         twv.setAdapter(adapterMovies);
-        //String ll = link();
-        //fetchMovies("lists/movies/box_office.json?limit=5&country=us");
+
+
+        twv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), DetailActivity.class);
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                startActivity(i);
+            }
+        });
 
         TinyDB tinydb = new TinyDB(getActivity());
         Gson gson = new Gson();
@@ -72,13 +81,12 @@ public class Home extends Fragment{
                 JSONArray jsonArray = new JSONArray(strJson);
                 //  listdata = new ArrayList<Movie>();
                 if (jsonArray != null) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < 5; i++) {
                         Movie m = new Movie();
                         JSONObject object = (JSONObject) jsonArray.get(i);
                         m.populateFrom(object);
                         adapterMovies.add(m);
                         Log.d("procitao", m.getTitle() + " " + m.getDuration());
-
                     }
 
                 }
@@ -87,8 +95,6 @@ public class Home extends Fragment{
                 e.printStackTrace();
             }
         }
-
-
 
         TwoWayView twvRecent = (TwoWayView) rootView.findViewById(R.id.lvItemsRecent);
         ArrayList<Movie> eMovies = new ArrayList<Movie>();
@@ -96,49 +102,21 @@ public class Home extends Fragment{
         adapterMovies = new HomeAdapter(getActivity().getBaseContext(), eMovies);
         twvRecent.setAdapter(adapterMovies);
 
+        twvRecent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), DetailActivity.class);
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                startActivity(i);
+            }
+        });
 
         recentSeen();
-//------------------------------------------------
-/*
 
-        TwoWayView twvRecent = (TwoWayView) rootView.findViewById(R.id.lvItemsRecent);
-
-        adapterMovies = new HomeAdapter(getActivity().getBaseContext(), aMovies);
-        twvRecent.setAdapter(adapterMovies);
-        //String ll = link();
-        //fetchMovies("lists/movies/box_office.json?limit=5&country=us");
-
-        TinyDB tinydb1 = new TinyDB(getActivity());
-        Gson gson1 = new Gson();
-        Log.d("test-recent", tinydb1.getString("jsonArrayRecent"));
-
-        String strJson1 = tinydb.getString("jsonArrayRecent");
-        if (strJson1 != null) {
-            try {
-                JSONArray jsonArray1 = new JSONArray(strJson1);
-                //  listdata = new ArrayList<Movie>();
-                if (jsonArray1 != null) {
-                    for (int i = 0; i < jsonArray1.length(); i++) {
-                        Movie m1 = new Movie();
-                        JSONObject object1 = (JSONObject) jsonArray1.get(i);
-                        m1.populateFrom(object1);
-                        adapterMovies.add(m1);
-                        Log.d("procitao", m1.getTitle() + " " + m1.getDuration());
-
-                    }
-
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
-*/
         return rootView;
     }
+
+
 
     public void checkIsFirstTime() {
         SharedPreferences.Editor firstTimeOnHome = this.getActivity().getPreferences(MODE_PRIVATE).edit();
@@ -156,33 +134,30 @@ public class Home extends Fragment{
         }
     }
 
+    public void recentSeen(){
 
-public void recentSeen(){
+        TinyDB tinydb = new TinyDB(getActivity());
+        Gson gson = new Gson();
+        Log.d("test", tinydb.getString("jsonArrayRecent"));
 
-
-    TinyDB tinydb = new TinyDB(getActivity());
-    Gson gson = new Gson();
-    Log.d("test", tinydb.getString("jsonArrayRecent"));
-
-    String strJson = tinydb.getString("jsonArrayRecent");
-    if (strJson != null) {
-        try {
-            JSONArray jsonArray = new JSONArray(strJson);
-            if (jsonArray != null) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    Movie m = new Movie();
-                    JSONObject object = (JSONObject) jsonArray.get(i);
-                    m.populateFrom(object);
-                    adapterMovies.add(m);
-                    Log.d("procitao", m.getTitle() + " " + m.getDuration());
+        String strJson = tinydb.getString("jsonArrayRecent");
+        if (strJson != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(strJson);
+                if (jsonArray != null) {
+                    for (int i = 0; i <  jsonArray.length(); i++) {
+                        Movie m = new Movie();
+                        JSONObject object = (JSONObject) jsonArray.get(i);
+                        m.populateFrom(object);
+                        adapterMovies.add(m);
+                        Log.d("procitao", m.getTitle() + " " + m.getDuration());
+                    }
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 
-
-}
 
 }

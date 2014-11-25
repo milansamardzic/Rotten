@@ -63,8 +63,6 @@ public abstract class Sve extends Fragment {
         return rootView;
     }
 
-
-
     public abstract String link();
 
 
@@ -77,9 +75,6 @@ public abstract class Sve extends Fragment {
             }
         }, 2000);
     }
-
-
-
 
 //    String url;// = "lists/movies/box_office.json";
     ArrayList<Movie> movies;
@@ -106,10 +101,9 @@ public abstract class Sve extends Fragment {
             }
         }, url);
 
-
         SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
         SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
-        Boolean isIt = count.getBoolean("selection-end", false);
+        Boolean isIt = count.getBoolean("selection-first", false);
         if (isIt == false) {
             ViewTarget viewTarget = new ViewTarget(lvMovies);
             ShowcaseView showcaseView;
@@ -118,12 +112,10 @@ public abstract class Sve extends Fragment {
                     .setContentTitle("One tap")
                     .setContentText("One tap on each card open detail view")
                     .build();
-            firstTimeOnFav.putBoolean("selection-end", true);
+            firstTimeOnFav.putBoolean("selection-first", true);
             firstTimeOnFav.apply();
         }
-        
     }
-
 
     private void setupMovieSelectedListener() {
 
@@ -137,6 +129,7 @@ public abstract class Sve extends Fragment {
             }
         });
     }
+
 //del idiote!
     public void  setupMovieSelectedLongListener() {
 
@@ -198,7 +191,7 @@ public abstract class Sve extends Fragment {
             tinydb = new TinyDB(getActivity());
             tinydb.putString("jsonArrayRecent", jsonArraySave.toString());
             Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
-            Log.d("State", "saved");
+            Log.d("State-l", jsonArraySave.toString());
 
         }
     }

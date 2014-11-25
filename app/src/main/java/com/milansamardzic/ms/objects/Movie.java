@@ -95,17 +95,16 @@ public class Movie implements Serializable {
         return mpaaRating;
     }
 
-/*    public String getPosterUrl() {
+    public String getPosterUrl() {
         return posterUrl;
-    }*/
+    }
 
     public int getCriticsScore() {
         return criticsScore;
     }
 
     public String getCastList() {
-        return TextUtils.join(", ", castList);
-        //return null;
+       return TextUtils.join(", ", castList);
     }
 
     public int getDuration() {
@@ -131,8 +130,18 @@ public class Movie implements Serializable {
             this.year = jsonObject.getInt("year");
             this.duration = jsonObject.getInt("duration");
             this.criticsScore = jsonObject.getInt("criticsScore");
+            this.audienceScore = jsonObject.getInt("audienceScore");
+            this.synopsis = jsonObject.getString("synopsis");
             this.largePosterUrl = jsonObject.getString("largePosterUrl");
             this.relaseDate = jsonObject.getString("relaseDate");
+            this.castList = new ArrayList<String>();
+
+            this.castList = new ArrayList<String>();
+            JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
+            for (int i = 0; i < abridgedCast.length(); i++) {
+                this.castList.add(abridgedCast.getJSONObject(i).getString("name"));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
