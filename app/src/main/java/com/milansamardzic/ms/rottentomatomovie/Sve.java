@@ -220,6 +220,7 @@ public abstract class Sve extends Fragment{
                 Log.d("State", "reading");
             }
 
+          /* duplicated movie are allowed :-)
             for (int e = 0; e < mojaLista.size(); e++) {
 
                 if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
@@ -229,7 +230,7 @@ public abstract class Sve extends Fragment{
 
                 }
             }
-
+          */
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -241,8 +242,7 @@ public abstract class Sve extends Fragment{
             JsonArray jsonArraySave = gson.toJsonTree(mojaLista).getAsJsonArray();
             tinydb = new TinyDB(getActivity());
             tinydb.putString("jsonArrayRecent", jsonArraySave.toString());
-            Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
-            Log.d("State-l", jsonArraySave.toString());
+            //Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
 
         }
     }

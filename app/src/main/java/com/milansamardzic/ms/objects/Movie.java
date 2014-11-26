@@ -25,6 +25,12 @@ public class Movie implements Serializable {
     private String mpaaRating;
     private ArrayList<String> castList;
 
+    public String getId() {
+        return id;
+    }
+
+    private String id;
+
     public String getRelaseDate() {
         return relaseDate;
     }
@@ -32,6 +38,7 @@ public class Movie implements Serializable {
     public static Movie fromJsonn(JSONObject jsonObject){
         Movie m = new Movie();
         try {
+            m.id = jsonObject.getString("id");
             m.title = jsonObject.getString("title");
             m.year = jsonObject.getInt("year");
             m.synopsis = jsonObject.getString("synopsis");
@@ -126,6 +133,7 @@ public class Movie implements Serializable {
     public void populateFrom(JSONObject jsonObject)
     {
         try {
+            this.id = jsonObject.getString("id");
             this.title = jsonObject.getString("title");
             this.year = jsonObject.getInt("year");
             this.duration = jsonObject.getInt("duration");
@@ -134,13 +142,10 @@ public class Movie implements Serializable {
             this.synopsis = jsonObject.getString("synopsis");
             this.largePosterUrl = jsonObject.getString("largePosterUrl");
             this.relaseDate = jsonObject.getString("relaseDate");
-            this.castList = new ArrayList<String>();
+            this.mpaaRating = jsonObject.getString("mpaaRating");
 
             this.castList = new ArrayList<String>();
-            JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
-            for (int i = 0; i < abridgedCast.length(); i++) {
-                this.castList.add(abridgedCast.getJSONObject(i).getString("name"));
-            }
+            this.castList.add((String.valueOf(jsonObject.getJSONArray("castList")).replace("[\"", "").replace("\"]","").replace("\""," ")));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -148,7 +153,7 @@ public class Movie implements Serializable {
     }
 
 
-
+/* depricated
     public void populateFromRecent(JSONObject jsonObject1)
     {
         try {
@@ -160,6 +165,6 @@ public class Movie implements Serializable {
         }
     }
 
-
+*/
 
 }

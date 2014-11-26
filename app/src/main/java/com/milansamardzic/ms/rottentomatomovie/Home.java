@@ -47,7 +47,8 @@ public class Home extends Fragment{
     private RottenTomatoesClient client;
     public static final String MOVIE_DETAIL_KEY = "movie";
     SwipeRefreshLayout swipeLayout;
-
+    TwoWayView twvRecent;
+    TwoWayView twvFav;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,21 +56,14 @@ public class Home extends Fragment{
 
         checkIsFirstTime();
 
-        TwoWayView twv = (TwoWayView) rootView.findViewById(R.id.lvItemsBox);
+        twvFav = (TwoWayView) rootView.findViewById(R.id.lvItemsBox);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
 
         adapterMovies = new HomeAdapter(getActivity().getBaseContext(), aMovies);
-        twv.setAdapter(adapterMovies);
+        twvFav.setAdapter(adapterMovies);
 
 
-        twv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), DetailActivity.class);
-                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
-                startActivity(i);
-            }
-        });
+
             //--favourite--//
             TinyDB tinydb = new TinyDB(getActivity());
             Gson gson = new Gson();
@@ -77,11 +71,34 @@ public class Home extends Fragment{
             fetch(strJson);
             //--------//
 
-        TwoWayView twvRecent = (TwoWayView) rootView.findViewById(R.id.lvItemsRecent);
+        twvRecent = (TwoWayView) rootView.findViewById(R.id.lvItemsRecent);
         ArrayList<Movie> eMovies = new ArrayList<Movie>();
 
         adapterMovies = new HomeAdapter(getActivity().getBaseContext(), eMovies);
         twvRecent.setAdapter(adapterMovies);
+
+
+        favClick();
+        recentClick();
+
+
+        recentSeen();
+
+        return rootView;
+    }
+
+    private void favClick() {
+        twvFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), DetailActivity.class);
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                startActivity(i);
+            }
+        });
+    }
+
+    private void recentClick() {
 
         twvRecent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,9 +109,6 @@ public class Home extends Fragment{
             }
         });
 
-        recentSeen();
-
-        return rootView;
     }
 
     public void fetch(String strJson){

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -47,6 +48,7 @@ import java.util.Date;
 import java.util.Random;
 
 import static android.graphics.Color.parseColor;
+import static android.net.Uri.*;
 
 public class DetailActivity extends ActionBarActivity {
     public static Integer fragmentNumber=5;
@@ -139,7 +141,9 @@ public Movie ppom;
             firstTimeOnDetail.apply();
         }
     }
-
+public String  titleS=null;
+public Integer  yearS = null;
+public String pictureS = null;
     @SuppressLint("NewApi")
     public void loadMovie(Movie movie) {
         ee = movie;
@@ -148,6 +152,9 @@ public Movie ppom;
         }
         tvTitle.setText(movie.getTitle());
 
+        titleS = movie.getTitle();
+        yearS = movie.getYear();
+        pictureS = movie.getLargePosterUrl();
 
         //pgAB.setProgress(movie.getAudienceScore());
         progressStatusAudienceMax = movie.getAudienceScore();
@@ -220,6 +227,7 @@ public Movie ppom;
 
         String cast;
         cast = movie.getCastList().replaceAll(", ", "\n\n• ");
+       // cast = String.valueOf(movie.getCl());
         tvCast.setText("• " + cast);
 
         tvSynopsis.setText(movie.getSynopsis());
@@ -237,7 +245,8 @@ public Movie ppom;
         readJSON();
         for (int e = 0; e < mojaLista.size(); e++) {
             Log.d("State", movie.getTitle());
-            if (mojaLista.get(e).getTitle().contentEquals(movie.getTitle())) {
+           if (mojaLista.get(e).getId().contentEquals(ee.getId())) {
+           //d if (mojaLista.get(e).getTitle().contentEquals(movie.getTitle())) {
                 changeIcon = 1;
               //  btn.setBackground(getResources().getDrawable(R.drawable.favourite_full));
                 Log.d("State", "true");
@@ -276,7 +285,8 @@ public Movie ppom;
                         openSharedPreferences();
                         readJSON();
                         for (int e = 0; e < mojaLista.size(); e++) {
-                            if (mojaLista.get(e).getTitle().contentEquals(ee.getTitle())) {
+                            if (mojaLista.get(e).getId().contentEquals(ee.getId())) {
+                            //dif (mojaLista.get(e).getTitle().contentEquals(ee.getTitle())) {
                                 //delete
                                 mojaLista.remove(e);
                                 JsonArray jsonArray = gson.toJsonTree(mojaLista).getAsJsonArray();
@@ -307,6 +317,16 @@ public Movie ppom;
                 }
 
                 break;
+
+            case R.id.share_action_settings: {
+                String userEntry = ("I recomand this movie [sent fromAngry tomato android app]" + " " + titleS + " " + yearS + " " + pictureS).toString();
+
+                Intent textShareIntent = new Intent(Intent.ACTION_SEND);
+                textShareIntent.putExtra(Intent.EXTRA_TEXT, userEntry);
+                textShareIntent.setType("text/plain");
+                startActivity(textShareIntent);
+            }break;
+
             case android.R.id.home:
                    super.onBackPressed();
               break;
