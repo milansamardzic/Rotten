@@ -5,13 +5,38 @@
     android:minHeight="140dp"
     android:fontFamily="sans-serif-light">
 
+<LinearLayout
+    android:visibility="gone"
+    android:id="@+id/sakrij"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_marginBottom="5dp">
+
+    <TextView
+        android:id="@+id/tvDateHeader"
+        android:text="January 01"
+        android:textSize="16sp"
+        android:textColor="#141414"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:layout_toRightOf="@+id/tvDateLabel" />
+
+    </LinearLayout>
+
 <RelativeLayout
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="3dp"
     android:layout_marginBottom="2dp"
     android:padding="5dp"
-    android:background="#fefefe">
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#fefefe"
+    android:layout_below="@+id/sakrij">
     <RelativeLayout
 
         android:layout_width="match_parent"
@@ -78,7 +103,7 @@
             android:scrollHorizontally="true"
             android:layout_weight="0"
             android:text="(1014)"
-            android:textColor="#85afbf"
+            android:textColor="#3F51B5"
             android:fontFamily="sans-serif-light"
             android:textSize="18sp"/>
 
@@ -130,7 +155,7 @@
             android:id="@+id/tvDate"
             android:text="January 01"
             android:textSize="16sp"
-            android:textColor="#85afbf"
+            android:textColor="#B71C1C"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
@@ -163,7 +188,7 @@
                 android:ellipsize="end"
                 android:id="@+id/mocni_rendzer"
                 android:textSize="16sp"
-                android:textColor="#85afbf"
+                android:textColor="#3F51B5"
                 android:layout_below="@+id/tvDate"
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@+id/runtimeLabel" />

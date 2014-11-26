@@ -1,26 +1,20 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -29,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.milansamardzic.ms.client.BoxOfficeAdapter;
 import com.milansamardzic.ms.client.MoviesAdapter;
 import com.milansamardzic.ms.client.RottenTomatoesClient;
 import com.milansamardzic.ms.objects.Movie;
@@ -38,6 +33,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.zip.Inflater;
 
 /**
  * Created by ms on 11/4/14.
@@ -53,7 +51,6 @@ public abstract class Sve extends Fragment{
     TinyDB tinydb;
     ProgressBar load;
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
-
     public int i=0;
     private Handler handler = new Handler();
 
@@ -127,10 +124,9 @@ public abstract class Sve extends Fragment{
         }, 2000);
     }
 
-    //    String url;// = "lists/movies/box_office.json";
     ArrayList<Movie> movies;
-    public void fetchMovies(String nestoo) {
-        String url = nestoo;
+    public void fetchMovies(final String linkURL) {
+        String url = linkURL;
         final ArrayList<Movie> testLista = new ArrayList<Movie>();
         client = new RottenTomatoesClient();//
         client.getMovies(new JsonHttpResponseHandler() {
@@ -142,10 +138,29 @@ public abstract class Sve extends Fragment{
                     items = body.getJSONArray("movies");
 
                     movies = Movie.fromJson(items);
+                    ArrayList<Movie> integ = new ArrayList<Movie>();
 
-                    for (Movie movie : movies) {
-                        adapterMovies.add(movie);
+                    for(Movie m : movies) {
+                        integ.add(m);
                     }
+
+                    if (linkURL.contentEquals("lists/movies/box_office.json?limit=50&country=us"))
+                    {
+                        ArrayList<Movie> aMovies = new ArrayList<Movie>();
+                        BoxOfficeAdapter adapterMovies1 = new BoxOfficeAdapter(getActivity().getBaseContext(), aMovies);
+                        lvMovies.setAdapter(adapterMovies1);
+                        for (Movie m : integ) {
+                            adapterMovies1.add(m);
+                        }
+
+                    }else {
+                        Collections.sort(integ, new CustomComparator());
+                        for (Movie m : integ) {
+                            adapterMovies.add(m);
+                        }
+                    }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

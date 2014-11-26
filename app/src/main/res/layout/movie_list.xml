@@ -16,8 +16,7 @@
         android:dividerHeight="10dp"
         android:scrollbarStyle="outsideOverlay"
         android:smoothScrollbar="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:scrollbarSize="10dp"

@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.widget.TextView.OnEditorActionListener;
 
@@ -46,7 +47,6 @@ public class Search extends Fragment{
     public ArrayList<String> mojaLista = new ArrayList<String>();
     public TextView tvSearch;
     RelativeLayout rlIv;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,7 +57,6 @@ public class Search extends Fragment{
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
         adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
-
         setupMovieSelectedListener();
 
         Button btn = (Button) rootView.findViewById(R.id.search_button_sb);
@@ -145,9 +144,19 @@ public class Search extends Fragment{
                     items = body.getJSONArray("movies");
 
                     ArrayList<Movie> movies = Movie.fromJson(items);
-                    for (Movie movie : movies) {
-                        adapterMovies.add(movie);
+                    ArrayList<Movie> integ = new ArrayList<Movie>();
+
+                    for(Movie m : movies) {
+                        integ.add(m);
                     }
+
+                    Collections.sort(integ, new CustomComparator());
+
+                    for (Movie m : integ){
+                        adapterMovies.add(m);
+                    }
+
+                   
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

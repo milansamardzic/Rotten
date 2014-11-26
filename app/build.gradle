@@ -7,7 +7,7 @@ android {
         applicationId 'com.milansamardzic.ms.rottentomatomovie'
         minSdkVersion 14
         targetSdkVersion 16
-        versionCode 3
+        versionCode 4
         versionName "1.0"
     }
     buildTypes {

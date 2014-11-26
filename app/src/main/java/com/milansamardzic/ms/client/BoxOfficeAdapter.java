@@ -1,21 +1,10 @@
 package com.milansamardzic.ms.client;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -23,15 +12,21 @@ import android.widget.TextView;
 import com.milansamardzic.ms.RemoteImageView;
 import com.milansamardzic.ms.objects.Movie;
 import com.milansamardzic.ms.rottentomatomovie.R;
-import com.milansamardzic.ms.rottentomatomovie.Sve;
-import com.milansamardzic.ms.rottentomatomovie.TinyDB;
 
-public class MoviesAdapter extends ArrayAdapter<Movie> {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+/**
+ * Created by ms on 11/27/14.
+ */
+public class BoxOfficeAdapter extends ArrayAdapter<Movie> {
     String where;
     ArrayList<Movie> movies = null;
 
-    public MoviesAdapter(Context context, ArrayList<Movie> aMovies) {
-        super(context, 0, aMovies); movies = aMovies;
+    public BoxOfficeAdapter(Context context, ArrayList<Movie> aMovies) {
+        super(context, 0, aMovies);
     }
 
     @Override
@@ -47,20 +42,20 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
 
-        LinearLayout showHide = (LinearLayout) convertView.findViewById(R.id.sakrij);
+       // LinearLayout showHide = (LinearLayout) convertView.findViewById(R.id.sakrij);
 
-         if (position > 0)
-             if ((movies.get(position - 1).getRelaseDate()).contentEquals(movies.get(position).getRelaseDate()))
-                 showHide.setVisibility(View.GONE);
-             else
-                 showHide.setVisibility(View.VISIBLE);
-             else
-             showHide.setVisibility(View.GONE);
+      /*  if (position > 0)
+            if ((movies.get(position - 1).getRelaseDate()).contentEquals(movies.get(position).getRelaseDate()))
+                showHide.setVisibility(View.GONE);
+            else
+                showHide.setVisibility(View.VISIBLE);
+        else
+            showHide.setVisibility(View.GONE);
 
         if (position == 0)
             showHide.setVisibility(View.VISIBLE);
 
-
+*/
 
 
         //---year---//
@@ -69,7 +64,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
         //---relase date---//
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
-       // tvDate.setText(movie.getRelaseDate());
+        // tvDate.setText(movie.getRelaseDate());
         String dateString = movie.getRelaseDate().toString();
 
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
@@ -79,13 +74,13 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat fmtOut = new SimpleDateFormat("dd MMM");
+        SimpleDateFormat fmtOut = new SimpleDateFormat("MMMM-dd");
         tvDate.setText(fmtOut.format(date).toString());
 
-        //---header---//
+        /*---header---//
         TextView tvDateHeader = (TextView) convertView.findViewById(R.id.tvDateHeader);
         tvDateHeader.setText(movie.getRelaseDate().toString());
-
+        */
 
 
         //---runtime---//
@@ -107,7 +102,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     public String fixAPI(String brokenImageLink){
         String imageURL = brokenImageLink;
-       return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det");
+        return imageURL = imageURL.replaceAll("[//_]+[t]..", "_det");
     }
 
 

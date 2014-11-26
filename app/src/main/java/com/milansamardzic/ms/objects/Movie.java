@@ -55,6 +55,11 @@ public class Movie implements Serializable {
             }
 
 
+
+
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
