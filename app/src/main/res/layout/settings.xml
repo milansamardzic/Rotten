@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/boxOfficeSettings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+      <LinearLayout
+            android:id="@+id/boxOfficeSettingss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/boxOfficeSettingsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/tvDateHeader"
+                android:text="Box Office Max"
+                android:textSize="16sp"
+                android:textColor="#B71C1C"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_toRightOf="@+id/tvDateLabel" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#3F51B5"/>
+
+        </LinearLayout>
+
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal"
+            android:max="50" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text"/>
+
+     </LinearLayout>
+
+     <LinearLayout
+            android:id="@+id/upcomingSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/upcomingSettingsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/tvdHeader"
+                    android:text="Upcoming Movies"
+                    android:textSize="16sp"
+                    android:textColor="#B71C1C"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_toRightOf="@+id/tvDateLabel" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="#3F51B5"/>
+
+            </LinearLayout>
+
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/upcomingSB"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_horizontal"
+                android:max="50" />
+
+            <TextView
+                android:id="@+id/tvUpcoming"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"/>
+
+        </LinearLayout>
+
+     <LinearLayout
+            android:id="@+id/openingSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/oLabel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/openingHeader"
+                    android:text="Opening Movies"
+                    android:textSize="16sp"
+                    android:textColor="#B71C1C"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_toRightOf="@+id/tvDateLabel" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="#3F51B5"/>
+
+            </LinearLayout>
+
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/openingSB"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_horizontal"
+                android:max="50" />
+
+            <TextView
+                android:id="@+id/tvOpening"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/openingSettingss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/boxOfficeSettingsLabell"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/theathreHeader"
+                    android:text="In Theather"
+                    android:textSize="16sp"
+                    android:textColor="#B71C1C"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_toRightOf="@+id/tvDateLabel" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="#3F51B5"/>
+
+            </LinearLayout>
+
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/theatherSB"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_horizontal"
+                android:max="50" />
+
+            <TextView
+                android:id="@+id/tvTheather"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/switchLabell"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/switchHeader"
+                    android:text="Balkan mode"
+                    android:textSize="16sp"
+                    android:textColor="#B71C1C"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_toRightOf="@+id/tvDateLabel" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="#3F51B5"/>
+             </LinearLayout>
+
+            <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hapticFeedbackEnabled="true"
+            android:checked="false"
+            android:text="Balkan"
+            android:id="@+id/switch1"
+            android:theme="@android:style/MediaButton.Play"
+                android:textColor="#141414" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

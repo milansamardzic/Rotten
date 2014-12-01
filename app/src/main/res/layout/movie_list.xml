@@ -16,7 +16,6 @@
         android:dividerHeight="10dp"
         android:scrollbarStyle="outsideOverlay"
         android:smoothScrollbar="true"
-
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:scrollbarSize="10dp"
@@ -32,5 +31,16 @@
         android:interpolator="@android:anim/linear_interpolator"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+
+    <ImageView
+        android:id="@+id/ivSad"
+        android:visibility="gone"
+        android:alpha="0.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sad"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

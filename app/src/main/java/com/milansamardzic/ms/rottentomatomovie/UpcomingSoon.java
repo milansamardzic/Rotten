@@ -6,8 +6,15 @@ package com.milansamardzic.ms.rottentomatomovie;
 public class UpcomingSoon extends Sve {
     @Override
     public String link() {
-        String upcomingLimit = "50";
-        String link = "lists/movies/upcoming.json?page_limit=" + upcomingLimit +  "&page=1";
+
+        TinyDB db = new TinyDB(getActivity());
+        int i = db.getInt("upcoming");
+        if(i==0) {
+            i = 50;
+        }
+
+        //String upcomingLimit = "50";
+        String link = "lists/movies/upcoming.json?page_limit=" + String.valueOf(i) +  "&page=1";
         return link;
     }
 }

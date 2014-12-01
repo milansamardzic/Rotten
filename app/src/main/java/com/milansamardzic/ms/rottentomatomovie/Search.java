@@ -5,7 +5,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.UserDictionary;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +14,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.milansamardzic.ms.client.MoviesAdapter;
+import com.milansamardzic.ms.client.MovieAdapter;
+import com.milansamardzic.ms.client.SortAdapter;
 import com.milansamardzic.ms.client.RottenTomatoesClient;
 import com.milansamardzic.ms.objects.Movie;
 
@@ -29,8 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -41,7 +38,7 @@ import static android.widget.TextView.OnEditorActionListener;
  */
 public class Search extends Fragment{
     private ListView lvMovies;
-    private MoviesAdapter adapterMovies;
+    private MovieAdapter adapterMovies;
     private RottenTomatoesClient client;
     public static final String MOVIE_DETAIL_KEY = "movie";
     public ArrayList<String> mojaLista = new ArrayList<String>();
@@ -55,7 +52,7 @@ public class Search extends Fragment{
 
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-        adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
+        adapterMovies = new MovieAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
         setupMovieSelectedListener();
 

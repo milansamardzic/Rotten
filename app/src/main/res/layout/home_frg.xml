@@ -46,6 +46,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/lvItemsBox" />
 
+            <ImageView
+                android:layout_width="270dp"
+                android:layout_height="100dp"
+                android:id="@+id/milje"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="false"
+                android:background="@drawable/milje_1" />
 
 
         </RelativeLayout>

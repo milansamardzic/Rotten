@@ -41,23 +41,11 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/blac_white_gradient"
-                android:alpha="0.7"
+                android:alpha="1"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true" />
-
-
-            <TextView
-                android:id="@+id/tvCriticsScore"
-                android:textColor="#fff"
-                android:fontFamily="sans-serif"
-                android:textSize="16sp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:text="88%"
-                android:visibility="gone"
-                android:gravity="center"
-                android:background="@drawable/red_circle" />
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -65,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:textColorHighlight="#ddf435"
-                android:lines="2"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="#fff"
                 android:paddingLeft="20dp"
@@ -73,9 +61,8 @@
                 android:textSize="24sp"
                 android:gravity="left"
                 android:text="Title"
-                android:layout_marginBottom="15dp"
-                android:layout_alignRight="@+id/ivCritichScore"
-                android:layout_above="@+id/ivCritichScore" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="45dp"/>
 
                 <ImageView
                     android:id="@+id/ivCritichScore"
@@ -108,28 +95,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/synopsisRL" >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="#B71C1C"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/ivCastBack" />
 
                 <TextView
                 android:id="@+id/tvCastLabel"
-                android:layout_alignTop="@+id/ivCastBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:textColor="#fff"
+                android:background="#E53935"
                 android:gravity="center_vertical|left"
                 android:textAlignment="textStart"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:fontFamily="sans-serif-light"
                 android:text="Cast"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_alignBottom="@+id/ivCastBack"
-                android:layout_marginLeft="10dp"
+                android:paddingLeft="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentLeft="true"/>
 
@@ -142,7 +122,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="#fff"
-                    android:layout_below="@+id/ivCastBack"
+                    android:layout_below="@+id/tvCastLabel"
                     android:layout_alignParentLeft="true">
 
                     <TextView
@@ -158,8 +138,6 @@
                         android:text="Christian Bale, Joseph-Gordon Levitt"
                         android:layout_alignParentLeft="true"
                         android:padding="5dp" />
-
-
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -175,49 +153,50 @@
                 android:layout_below="@+id/middlePart"
                 android:layout_alignParentLeft="true">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:background="#3F51B5"
-                    android:layout_alignParentLeft="true"
-                    android:id="@+id/imageView"
-                    android:layout_alignParentRight="true" />
-
-
                 <TextView
                     android:id="@+id/tvSynopsisLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:textColor="#fff"
+                    android:background="#3F51B5"
                     android:gravity="center_vertical|left"
                     android:textAlignment="textStart"
-                    android:textSize="26sp"
+                    android:textSize="22sp"
                     android:fontFamily="sans-serif-light"
                     android:text="Synopsis"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="18dp" />
-
-
+                    android:paddingLeft="15dp"
+                    />
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/RelativeLayout01"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/tvSynopsisLabel"
+                    android:padding="5dp">
                 <TextView
                     android:id="@+id/tvSynopsis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#141414"
+                    android:layout_marginTop="5dp"
                     android:textAlignment="textStart"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
                     android:textSize="16sp"
-                    android:layout_marginTop="8dp"
+                    android:layout_centerInParent="true"
                     android:layout_marginBottom="8dp"
                     android:lineSpacingExtra="3dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Some story Some storySome storySome storySome storySome storySome storySome story "
-                    android:layout_below="@+id/imageView"
+                    android:text="Some story Some storySome story Some story Some story Some story Some storySome story "
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:padding="5dp" />
+                     />
+
+                    </RelativeLayout>
 
             </RelativeLayout>
 

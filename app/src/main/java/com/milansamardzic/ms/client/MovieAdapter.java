@@ -21,11 +21,11 @@ import java.util.Date;
 /**
  * Created by ms on 11/27/14.
  */
-public class BoxOfficeAdapter extends ArrayAdapter<Movie> {
+public class MovieAdapter extends ArrayAdapter<Movie> {
     String where;
     ArrayList<Movie> movies = null;
 
-    public BoxOfficeAdapter(Context context, ArrayList<Movie> aMovies) {
+    public MovieAdapter(Context context, ArrayList<Movie> aMovies) {
         super(context, 0, aMovies);
     }
 
@@ -42,22 +42,6 @@ public class BoxOfficeAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
 
-       // LinearLayout showHide = (LinearLayout) convertView.findViewById(R.id.sakrij);
-
-      /*  if (position > 0)
-            if ((movies.get(position - 1).getRelaseDate()).contentEquals(movies.get(position).getRelaseDate()))
-                showHide.setVisibility(View.GONE);
-            else
-                showHide.setVisibility(View.VISIBLE);
-        else
-            showHide.setVisibility(View.GONE);
-
-        if (position == 0)
-            showHide.setVisibility(View.VISIBLE);
-
-*/
-
-
         //---year---//
         TextView tvYearTitle = (TextView) convertView.findViewById(R.id.tvYearTitle);
         tvYearTitle.setText(" (" + movie.getYear() + ")");
@@ -67,7 +51,7 @@ public class BoxOfficeAdapter extends ArrayAdapter<Movie> {
         // tvDate.setText(movie.getRelaseDate());
         String dateString = movie.getRelaseDate().toString();
 
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = fmt.parse(dateString);
@@ -76,12 +60,6 @@ public class BoxOfficeAdapter extends ArrayAdapter<Movie> {
         }
         SimpleDateFormat fmtOut = new SimpleDateFormat("MMMM-dd");
         tvDate.setText(fmtOut.format(date).toString());
-
-        /*---header---//
-        TextView tvDateHeader = (TextView) convertView.findViewById(R.id.tvDateHeader);
-        tvDateHeader.setText(movie.getRelaseDate().toString());
-        */
-
 
         //---runtime---//
         TextView mr = (TextView) convertView.findViewById(R.id.mocni_rendzer);

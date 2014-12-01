@@ -7,23 +7,30 @@
 
 <LinearLayout
     android:visibility="gone"
-    android:id="@+id/sakrij"
+    android:id="@+id/showHide"
     android:layout_width="match_parent"
     android:layout_height="30dp"
-    android:orientation="horizontal"
-    android:gravity="center"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
     android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/tvDateHeader"
         android:text="January 01"
         android:textSize="16sp"
-        android:textColor="#141414"
+        android:textColor="#B71C1C"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
+        android:layout_marginLeft="10dp"
         android:fontFamily="sans-serif-light"
         android:layout_toRightOf="@+id/tvDateLabel" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#3F51B5"/>
 
     </LinearLayout>
 
@@ -36,7 +43,7 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:background="#fefefe"
-    android:layout_below="@+id/sakrij">
+    android:layout_below="@+id/showHide">
     <RelativeLayout
 
         android:layout_width="match_parent"

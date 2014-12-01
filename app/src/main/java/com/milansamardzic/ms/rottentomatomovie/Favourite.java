@@ -3,24 +3,25 @@ package com.milansamardzic.ms.rottentomatomovie;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.milansamardzic.ms.client.MoviesAdapter;
+import com.milansamardzic.ms.client.MovieAdapter;
+import com.milansamardzic.ms.client.SortAdapter;
 import com.milansamardzic.ms.objects.Movie;
 
 import org.json.JSONArray;
@@ -37,13 +38,14 @@ import static com.milansamardzic.ms.rottentomatomovie.R.layout.*;
 public class Favourite extends Fragment {
     private static final int MODE_PRIVATE = 0;
     private ListView lvMovies;
-    public MoviesAdapter adapterMovies;
+    public MovieAdapter adapterMovies;
     ArrayList<Movie> listdata;
 
     public static final String MOVIE_DETAIL_KEY = "movie";
     ArrayList<String> titlee;
     Movie m;
     ProgressBar load;
+    ImageView ivSad;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,20 +54,24 @@ public class Favourite extends Fragment {
 
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-        adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
+        adapterMovies = new MovieAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
-        ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
-        loadData();
+        load = (ProgressBar) rootView.findViewById(R.id.pbLoad);
+        ivSad =(ImageView) rootView.findViewById(R.id.ivSad);
+            if(loadData()==false)
+            {
+                ivSad.setVisibility(View.VISIBLE);
+            }else {ivSad.setVisibility(View.GONE);}
 
         removeFromFavourites();
 
         setupMovieSelectedListener();
-
+        waitToLoad();
 
         return rootView;
     }
 
-    public void loadData(){
+    public boolean loadData(){
 
         TinyDB tinydb = new TinyDB(getActivity());
         Gson gson = new Gson();
@@ -83,10 +89,8 @@ public class Favourite extends Fragment {
                         m.populateFrom(object);
                         //       listdata.add(m);
                         adapterMovies.add(m);
+
                         Log.d("procitao", m.getTitle() + " " + m.getDuration() + m.getLargePosterUrl());
-
-
-                        waitToLoad();
 
                         SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
                         SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
@@ -98,18 +102,21 @@ public class Favourite extends Fragment {
                                     .setTarget(viewTarget)
                                     .setContentTitle("One or Two tap?")
                                     .setContentText("One tap on each card open detail view, but BE CAREFUL - LONG PRESS DELETE MOVIE FROM LIST")
+                                    .setStyle(R.style.customShowCase)
                                     .build();
                             firstTimeOnFav.putBoolean("fav", true);
                             firstTimeOnFav.apply();
                         }
+                        return true;
                     }
+
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
+        return false;
 
     }
 
@@ -267,11 +274,11 @@ public class Favourite extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
                                 load.setVisibility(View.VISIBLE);
 
                             }
                         });
+
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -279,12 +286,14 @@ public class Favourite extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ProgressBar load = (ProgressBar) getActivity().findViewById(R.id.pbLoad);
                         lvMovies.setVisibility(View.VISIBLE);
                         load.setVisibility(View.GONE);
+
                     }
                 });
-            };
+            }
+
+            ;
         };
         thread.start();
     }

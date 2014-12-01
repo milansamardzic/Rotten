@@ -1,31 +1,24 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.milansamardzic.ms.client.HomeAdapter;
-import com.milansamardzic.ms.client.MoviesAdapter;
 import com.milansamardzic.ms.client.RottenTomatoesClient;
 import com.milansamardzic.ms.objects.Movie;
 
@@ -36,7 +29,6 @@ import org.lucasr.twowayview.TwoWayView;
 
 import java.util.ArrayList;
 
-import static com.milansamardzic.ms.rottentomatomovie.R.layout.movie_list;
 /**
  * Created by ms on 11/13/14.
  */
@@ -58,10 +50,9 @@ public class Home extends Fragment{
 
         twvFav = (TwoWayView) rootView.findViewById(R.id.lvItemsBox);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-
         adapterMovies = new HomeAdapter(getActivity().getBaseContext(), aMovies);
         twvFav.setAdapter(adapterMovies);
-
+        favClick();
 
 
             //--favourite--//
@@ -73,13 +64,13 @@ public class Home extends Fragment{
 
         twvRecent = (TwoWayView) rootView.findViewById(R.id.lvItemsRecent);
         ArrayList<Movie> eMovies = new ArrayList<Movie>();
-
         adapterMovies = new HomeAdapter(getActivity().getBaseContext(), eMovies);
         twvRecent.setAdapter(adapterMovies);
 
+        ImageView milje = (ImageView) rootView.findViewById(R.id.milje);
 
-        favClick();
-        recentClick();
+        Boolean isMilje = tinydb.getBoolean("balkan");
+        if(isMilje==true){ milje.setVisibility(View.VISIBLE); } else{ milje.setVisibility(View.GONE); }
 
 
         recentSeen();
@@ -90,9 +81,9 @@ public class Home extends Fragment{
     private void favClick() {
         twvFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int positionFav, long id) {
                 Intent i = new Intent(getActivity(), DetailActivity.class);
-                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(positionFav));
                 startActivity(i);
             }
         });
@@ -133,17 +124,23 @@ public class Home extends Fragment{
         }
     }
 
+
+
     public void checkIsFirstTime() {
         SharedPreferences.Editor firstTimeOnHome = this.getActivity().getPreferences(MODE_PRIVATE).edit();
         SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
         Boolean isIt = count.getBoolean("first", false);
         if (isIt == false) {
-            new ShowcaseView.Builder(getActivity())
+           /* new ShowcaseView.Builder(getActivity())
                     .setTarget(new ActionViewTarget(getActivity(), ActionViewTarget.Type.HOME))
                     .setContentTitle("Menu view")
                     .setContentText("Here is menu")
                     .hideOnTouchOutside()
-                    .build();
+                    .setStyle(android.R.style.Theme_Black)
+                    .build();*/
+            DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawerLayout);
+            drawerLayout.openDrawer(Gravity.LEFT);
+
             firstTimeOnHome.putBoolean("first", true);
             firstTimeOnHome.apply();
         }
@@ -156,6 +153,6 @@ public class Home extends Fragment{
         Log.d("test", tinydb.getString("jsonArrayRecent"));
         String strJson = tinydb.getString("jsonArrayRecent");
         fetch(strJson);
-
+        recentClick();
     }
 }

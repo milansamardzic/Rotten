@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.milansamardzic.ms.client.MoviesAdapter;
 import com.milansamardzic.ms.client.RottenTomatoesClient;
 import com.milansamardzic.ms.gridview.GridAdapter;
 import com.milansamardzic.ms.objects.Movie;
@@ -44,14 +41,20 @@ public class InTheatersG extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.in_theaters, container, false);
 
-        String inTheatreLimit = "50";
+        TinyDB db = new TinyDB(getActivity());
+        int i = db.getInt("theather");
+        if(i==0) {
+            i = 50;
+        }
+
+       // String inTheatreLimit = "50";
 
         gwTBO = (GridView) rootView.findViewById(R.id.gvtbo);
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
         adapterMovies = new GridAdapter(getActivity().getBaseContext(), aMovies);
         gwTBO.setAdapter(adapterMovies);
         //gwTBO.setOnItemClickListener(this);
-        String ll = "lists/movies/in_theaters.json?page_limit="+ inTheatreLimit +"&page=1&country=us";
+        String ll = "lists/movies/in_theaters.json?page_limit=" + String.valueOf(i) + "&page=1&country=us";
 
         fetchMovies(ll);
         setupMovieSelectedListener();
@@ -88,12 +91,67 @@ public class InTheatersG extends Fragment{
         gwTBO.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                recentList(position);
                 Intent i = new Intent(getActivity(), DetailActivity.class);
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
                 startActivity(i);
             }
         });
     }
+
+
+    public void recentList(int position) {
+        Gson gson = new GsonBuilder().create();
+        Movie fav;
+
+        TinyDB tinydb = new TinyDB(getActivity());
+        String str = tinydb.getString("jsonArrayRecent");
+        int helper = 0;
+
+        JSONArray jsonA = null;
+        try {
+            jsonA = new JSONArray(str);
+            mojaLista = new ArrayList<Movie>();
+            for (int j = 0; j < jsonA.length(); j++) {
+                Movie m = new Movie();
+                JSONObject object = null;
+                object = (JSONObject) jsonA.get(j);
+                m.populateFrom(object);
+                mojaLista.add(m);
+                Log.d("State", "reading");
+            }
+
+            //   duplicated movie are allowed :-)
+            if(jsonA.length()>6){
+                for (int e = jsonA.length()-1;  e > jsonA.length()-6; e--) {
+                    if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
+                        Log.d("State", "true");
+                        helper = 1;}
+                }
+            }else{
+                for (int e = 0;  e < jsonA.length(); e++) {
+                    if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
+                        Log.d("State", "true");
+                        helper = 1;}
+                }
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (helper == 0) {
+            fav = movies.get(position);
+            mojaLista.add(fav);
+            JsonArray jsonArraySave = gson.toJsonTree(mojaLista).getAsJsonArray();
+            tinydb = new TinyDB(getActivity());
+            tinydb.putString("jsonArrayRecent", jsonArraySave.toString());
+            //Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
 
    /*depricated
     Movie fav;

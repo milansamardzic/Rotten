@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#3A9425"
+    android:background="#efefef"
     android:layout_gravity="center"
     android:gravity="center"
     android:weightSum="1">
@@ -14,8 +14,7 @@
         android:layout_height="150dp"
         android:background="@drawable/angry_ico"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp" />
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/tvLoad"
@@ -23,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:fontFamily="sans-serif-light"
+        android:textColor="#ce5043"
         android:text="0"
         android:layout_below="@+id/splashscreen"
         android:layout_centerHorizontal="true"

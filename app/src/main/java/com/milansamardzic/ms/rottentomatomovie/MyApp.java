@@ -11,9 +11,9 @@ import org.acra.annotation.ReportsCrashes;
  */
 
 @ReportsCrashes(
-        formKey = ""
-  //      mailTo =  "milan.samardzic@gmail.com",
-   //     mode = ReportingInteractionMode.SILENT
+        formKey = "",
+        mailTo =  "milan.samardzic@gmail.com, igor.trncic@atlantbh.com, jasmin.velic@atlantbh.com",
+        mode = ReportingInteractionMode.DIALOG
 )
 
 
@@ -21,6 +21,8 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-       // ACRA.init(this);
+        ACRA.init(this);
+        if (!BuildConfig.DEBUG)
+             ACRA.init(this);
     }
 }

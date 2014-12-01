@@ -1,8 +1,9 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,45 +11,42 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
+import android.provider.CalendarContract;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.milansamardzic.ms.RemoteImageView;
-import com.milansamardzic.ms.client.MoviesAdapter;
+import com.milansamardzic.ms.client.SortAdapter;
 import com.milansamardzic.ms.objects.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.Provider;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Random;
 
+import static android.graphics.Color.BLACK;
 import static android.graphics.Color.parseColor;
-import static android.net.Uri.*;
 
 public class DetailActivity extends ActionBarActivity {
     public static Integer fragmentNumber=5;
@@ -135,7 +133,7 @@ public Movie ppom;
                     .setTarget(target)
                     .setContentTitle("Favourite")
                     .setContentText("Select star to add or remove movie from your favourites")
-                    .doNotBlockTouches()
+                    .setStyle(R.style.customShowCase)
                     .build();
             firstTimeOnDetail.putBoolean("first", true);
             firstTimeOnDetail.apply();
@@ -327,6 +325,25 @@ public String pictureS = null;
                 startActivity(textShareIntent);
             }break;
 
+            case R.id.calendar_action_settings:{
+                try {
+                    Calendar cal = Calendar.getInstance();
+                    Intent intent = new Intent(Intent.ACTION_EDIT);
+                    try {
+                        cal.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(ee.getRelaseDate()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    intent.setType("vnd.android.cursor.item/event");
+                    intent.putExtra("beginTime", cal.getTimeInMillis());
+                    intent.putExtra("allDay", true);
+                    intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
+                    intent.putExtra("title", ee.getTitle().toString());
+                    intent.putExtra("hasAlarm", 1);
+                    intent.putExtra("description", "Synopsis\n" + ee.getSynopsis() + "\n\n\nCast list\n" + ee.getCastList());
+                    startActivity(intent);
+                    }catch (Exception e){e.printStackTrace();}
+            }break;
             case android.R.id.home:
                    super.onBackPressed();
               break;
@@ -335,9 +352,9 @@ public String pictureS = null;
     }
 
     private void refreshList() {
-        MoviesAdapter adapterMovies;
+        SortAdapter adapterMovies;
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-        adapterMovies = new MoviesAdapter(this.getBaseContext(), aMovies);
+        adapterMovies = new SortAdapter(this.getBaseContext(), aMovies);
         adapterMovies.clear();
         JSONArray jsonArray = null;
         String strJson = tinydb.getString("jsonArray");

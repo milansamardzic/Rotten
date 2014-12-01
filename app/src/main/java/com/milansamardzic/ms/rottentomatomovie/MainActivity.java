@@ -1,8 +1,11 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -83,9 +86,6 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-       // Integer i = (Integer) getIntent().getSerializableExtra(String.valueOf(DetailActivity.fragmentNumber));
-       // Log.d("fragment", String.valueOf(i));
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
                 drawerLayout.closeDrawer(Gravity.LEFT); return true;
             }else if (pos != 0) {
                 FragmentManager fragmentManager = getFragmentManager();
-                Fragment selected = new Home();;
+                Fragment selected = new Home();
                 fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
                 listView.setItemChecked(0, true);
                 setTitle(customNavDraw.opt[0].toUpperCase());
@@ -112,11 +112,8 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
             } else if(pos == 0){
                 finish();
             }
-
-
             return super.onKeyDown(keyCode, event);
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -126,13 +123,22 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
             return  true;
         }
         switch(item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_settings: {
+                Boolean con = isConnectedToInternet();
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment selected;
 
-                Toast.makeText(getApplication(), "refresh", Toast.LENGTH_LONG).show();
+                if (con == true) {
+                    selected = new Search();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                } else {
+                    Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();
+                }
+            }
+                //Intent intent = new Intent(this, SearchActivity.class);
+                //startActivity(intent);
                 break;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -173,8 +179,6 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
            }
        return false;
        }
-
-
 
 
     public void selectItem(int position) {
@@ -226,6 +230,11 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
                     fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();}
                 else{Toast.makeText(this, "No network", Toast.LENGTH_LONG).show();}
                 break;
+
+            case 7:
+                    selected = new Settings();
+                    fragmentManager.beginTransaction().replace(R.id.mainContent, selected).commit();
+                break;
             case 8:
                 if (con == true){
                     selected = new Feedback();
@@ -239,3 +248,6 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         }
     }
 }
+
+
+

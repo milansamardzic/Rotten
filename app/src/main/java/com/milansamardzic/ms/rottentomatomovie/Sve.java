@@ -23,8 +23,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.milansamardzic.ms.client.BoxOfficeAdapter;
-import com.milansamardzic.ms.client.MoviesAdapter;
+import com.milansamardzic.ms.client.MovieAdapter;
+import com.milansamardzic.ms.client.SortAdapter;
 import com.milansamardzic.ms.client.RottenTomatoesClient;
 import com.milansamardzic.ms.objects.Movie;
 
@@ -33,9 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.zip.Inflater;
 
 /**
  * Created by ms on 11/4/14.
@@ -43,15 +41,18 @@ import java.util.zip.Inflater;
 public abstract class Sve extends Fragment{
     private static final int MODE_PRIVATE = 0;
     private ListView lvMovies;
-    private MoviesAdapter adapterMovies;
+    private SortAdapter adapterMovies;
     private RottenTomatoesClient client;
     public static final String MOVIE_DETAIL_KEY = "movie";
     SwipeRefreshLayout swipeLayout;
     Button btnNxt;
     TinyDB tinydb;
+    public int adapter=0;
+    MovieAdapter adapterMovies1;
     ProgressBar load;
     public ArrayList<Movie> mojaLista = new ArrayList<Movie>();
     public int i=0;
+    ImageView ivSad;
     private Handler handler = new Handler();
 
     @Override
@@ -62,13 +63,20 @@ public abstract class Sve extends Fragment{
         lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         load = (ProgressBar) rootView.findViewById(R.id.pbLoad);
 
-      waitToLoad();
+        waitToLoad();
+
+        ivSad =(ImageView) rootView.findViewById(R.id.ivSad);
+
 
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-        adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
+        adapterMovies = new SortAdapter(getActivity().getBaseContext(), aMovies);
         lvMovies.setAdapter(adapterMovies);
         String ll = link();
-        fetchMovies(ll);
+       fetchMovies(ll);
+/*
+        if(fetchMovies(ll)==true)
+        { ivSad.setVisibility(View.VISIBLE);}else {ivSad.setVisibility(View.GONE);}*/
+
         setupMovieSelectedListener();
         //    setupMovieSelectedLongListener();
 
@@ -113,18 +121,8 @@ public abstract class Sve extends Fragment{
 
     public abstract String link();
 
-
-    public void onRefresh() {
-        Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeLayout.setRefreshing(false);
-            }
-        }, 2000);
-    }
-
     ArrayList<Movie> movies;
+    int bool =0;
     public void fetchMovies(final String linkURL) {
         String url = linkURL;
         final ArrayList<Movie> testLista = new ArrayList<Movie>();
@@ -144,14 +142,19 @@ public abstract class Sve extends Fragment{
                         integ.add(m);
                     }
 
-                    if (linkURL.contentEquals("lists/movies/box_office.json?limit=50&country=us"))
+                    Log.d("box", linkURL);
+                    if (linkURL.contains("box_office"))
                     {
                         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-                        BoxOfficeAdapter adapterMovies1 = new BoxOfficeAdapter(getActivity().getBaseContext(), aMovies);
-                        lvMovies.setAdapter(adapterMovies1);
-                        for (Movie m : integ) {
-                            adapterMovies1.add(m);
-                        }
+                        try {
+                            adapterMovies1 = new MovieAdapter(getActivity().getBaseContext(), aMovies);
+                            lvMovies.setAdapter(adapterMovies1);
+                            adapter = 1;
+                            for (Movie m : integ) {
+                                Log.d("box", integ.toString());
+                                adapterMovies1.add(m);
+                            }
+                    } catch (Exception e) {e.printStackTrace();}
 
                     }else {
                         Collections.sort(integ, new CustomComparator());
@@ -159,15 +162,14 @@ public abstract class Sve extends Fragment{
                             adapterMovies.add(m);
                         }
                     }
-
-
+               // bool =1;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }, url);
 
-        SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
+      /*  SharedPreferences.Editor firstTimeOnFav = this.getActivity().getPreferences(MODE_PRIVATE).edit();
         SharedPreferences count = this.getActivity().getPreferences(MODE_PRIVATE);
         Boolean isIt = count.getBoolean("selection-first", false);
         if (isIt == false) {
@@ -180,7 +182,8 @@ public abstract class Sve extends Fragment{
                     .build();
             firstTimeOnFav.putBoolean("selection-first", true);
             firstTimeOnFav.apply();
-        }
+        }*/
+       // if (bool == 1) {return true;}else{return false;}
     }
 
     private void setupMovieSelectedListener() {
@@ -190,28 +193,31 @@ public abstract class Sve extends Fragment{
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 recentList(position);
                 Intent i = new Intent(getActivity(), DetailActivity.class);
-                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+
+                if (adapter==1)
+                {
+                    i.putExtra(MOVIE_DETAIL_KEY, adapterMovies1.getItem(position));
+                }
+                else {
+                    i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                }
                 startActivity(i);
             }
         });
     }
 
-    //del idiote!
+
+    /*
     public void  setupMovieSelectedLongListener() {
-
         lvMovies.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
                 return false;
             }
-
         });
-
     }
-    //---
+    */
+
 
 
     public void recentList(int position) {
@@ -235,17 +241,21 @@ public abstract class Sve extends Fragment{
                 Log.d("State", "reading");
             }
 
-          /* duplicated movie are allowed :-)
-            for (int e = 0; e < mojaLista.size(); e++) {
-
-                if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
-                    Toast.makeText(getActivity(), "Already in favourite", Toast.LENGTH_SHORT).show();
-                    Log.d("State", "true");
-                    helper = 1;
-
+       //   duplicated movie are allowed :-)
+            if(jsonA.length()>6){
+                for (int e = jsonA.length()-1;  e > jsonA.length()-6; e--) {
+                    if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
+                        Log.d("State", "true");
+                        helper = 1;}
+                    }
+            }else{
+                for (int e = 0;  e < jsonA.length(); e++) {
+                    if (mojaLista.get(e).getTitle().contentEquals(movies.get(position).getTitle())) {
+                        Log.d("State", "true");
+                        helper = 1;}
                 }
             }
-          */
+
 
         } catch (JSONException e) {
             e.printStackTrace();

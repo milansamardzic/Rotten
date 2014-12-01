@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="customShowCase" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">#ce154355</item>
+        <item name="sv_showcaseColor">#B71C1C</item> <!--you can customize it-->
+        <item name="sv_buttonText">Close</item>
+        <item name="sv_detailTextAppearance">@style/CustomTextAppearanceShowcaseView</item>
+
+    </style>
+
+
+
+    <style name="CustomTextAppearanceShowcaseView">
+
+            <item name="android:textColor">#fff</item>
+            <item name="android:shadowColor">#FF0000</item>
+            <item name="android:shadowRadius">0</item>
+
+
+
+    </style>
+</resources>

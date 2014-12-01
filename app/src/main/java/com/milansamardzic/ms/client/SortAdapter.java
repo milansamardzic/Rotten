@@ -26,11 +26,11 @@ import com.milansamardzic.ms.rottentomatomovie.R;
 import com.milansamardzic.ms.rottentomatomovie.Sve;
 import com.milansamardzic.ms.rottentomatomovie.TinyDB;
 
-public class MoviesAdapter extends ArrayAdapter<Movie> {
+public class SortAdapter extends ArrayAdapter<Movie> {
     String where;
     ArrayList<Movie> movies = null;
 
-    public MoviesAdapter(Context context, ArrayList<Movie> aMovies) {
+    public SortAdapter(Context context, ArrayList<Movie> aMovies) {
         super(context, 0, aMovies); movies = aMovies;
     }
 
@@ -47,7 +47,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getTitle());
 
-        LinearLayout showHide = (LinearLayout) convertView.findViewById(R.id.sakrij);
+        LinearLayout showHide = (LinearLayout) convertView.findViewById(R.id.showHide);
 
          if (position > 0)
              if ((movies.get(position - 1).getRelaseDate()).contentEquals(movies.get(position).getRelaseDate()))
@@ -72,21 +72,19 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
        // tvDate.setText(movie.getRelaseDate());
         String dateString = movie.getRelaseDate().toString();
 
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = fmt.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat fmtOut = new SimpleDateFormat("dd MMM");
+        SimpleDateFormat fmtOut = new SimpleDateFormat("MMMM dd");
         tvDate.setText(fmtOut.format(date).toString());
 
         //---header---//
         TextView tvDateHeader = (TextView) convertView.findViewById(R.id.tvDateHeader);
-        tvDateHeader.setText(movie.getRelaseDate().toString());
-
-
+        tvDateHeader.setText(fmtOut.format(date).toString());
 
         //---runtime---//
         TextView mr = (TextView) convertView.findViewById(R.id.mocni_rendzer);

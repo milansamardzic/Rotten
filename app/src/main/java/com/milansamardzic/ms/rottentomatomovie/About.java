@@ -3,7 +3,6 @@ package com.milansamardzic.ms.rottentomatomovie;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.milansamardzic.ms.client.MoviesAdapter;
+import com.milansamardzic.ms.client.SortAdapter;
 import com.milansamardzic.ms.client.RottenTomatoesClient;
 import com.milansamardzic.ms.objects.Movie;
 
@@ -31,7 +31,7 @@ import java.util.Random;
  */
 public class About extends Fragment implements View.OnClickListener{
     int click=0;
-    private MoviesAdapter adapterMovies;
+    private SortAdapter adapterMovies;
     private RottenTomatoesClient client;
     public static final String MOVIE_DETAIL_KEY = "movie";
     ListView lvRecRnd;
@@ -47,7 +47,7 @@ public class About extends Fragment implements View.OnClickListener{
         imgV.setOnClickListener(this);
 
         ArrayList<Movie> aMovies = new ArrayList<Movie>();
-        adapterMovies = new MoviesAdapter(getActivity().getBaseContext(), aMovies);
+        adapterMovies = new SortAdapter(getActivity().getBaseContext(), aMovies);
         lvRecRnd.setAdapter(adapterMovies);
 
         return rootView;
@@ -63,8 +63,8 @@ public class About extends Fragment implements View.OnClickListener{
             fetchMovies("lists/movies/box_office.json?limit=50&country=us");
             setupMovieSelectedListener();
             Toast.makeText(getActivity(), "Angry give recomandation for movie night!", Toast.LENGTH_SHORT).show();
-            ImageView atlant = (ImageView) getActivity().findViewById(R.id.abutLogoA);
-            atlant.setVisibility(View.GONE);
+            RelativeLayout about = (RelativeLayout) getActivity().findViewById(R.id.abutLogoA);
+            about.setVisibility(View.GONE);
             animationTarget.startAnimation(animation);
 
         }
