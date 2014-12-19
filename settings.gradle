@@ -1,1 +1,7 @@
-include ':app'
+include ':app', ':Scrumptious', ':SwitchUserSample', ':PlacePickerSample', ':RPSSample', ':HelloFacebookSample', ':FriendPickerSample'
+project(':Scrumptious').projectDir = new File('facebook/samples/Scrumptious')
+project(':SwitchUserSample').projectDir = new File('facebook/samples/SwitchUserSample')
+project(':PlacePickerSample').projectDir = new File('facebook/samples/PlacePickerSample')
+project(':RPSSample').projectDir = new File('facebook/samples/RPSSample')
+project(':HelloFacebookSample').projectDir = new File('facebook/samples/HelloFacebookSample')
+project(':FriendPickerSample').projectDir = new File('facebook/samples/FriendPickerSample')

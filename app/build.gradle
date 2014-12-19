@@ -12,7 +12,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -34,4 +34,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'org.lucasr.twowayview:twowayview:0.1.4'
+    compile 'com.facebook.android:facebook-android-sdk:+'
 }

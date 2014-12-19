@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/facebook/samples/FriendPickerSample/FriendPickerSample.iml" filepath="$PROJECT_DIR$/facebook/samples/FriendPickerSample/FriendPickerSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/samples/HelloFacebookSample/HelloFacebookSample.iml" filepath="$PROJECT_DIR$/facebook/samples/HelloFacebookSample/HelloFacebookSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/samples/PlacePickerSample/PlacePickerSample.iml" filepath="$PROJECT_DIR$/facebook/samples/PlacePickerSample/PlacePickerSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/samples/RPSSample/RPSSample.iml" filepath="$PROJECT_DIR$/facebook/samples/RPSSample/RPSSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/RottenTomatoMovie.iml" filepath="$PROJECT_DIR$/RottenTomatoMovie.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/samples/Scrumptious/Scrumptious.iml" filepath="$PROJECT_DIR$/facebook/samples/Scrumptious/Scrumptious.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/samples/SwitchUserSample/SwitchUserSample.iml" filepath="$PROJECT_DIR$/facebook/samples/SwitchUserSample/SwitchUserSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

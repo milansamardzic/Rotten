@@ -1,15 +1,12 @@
 package com.milansamardzic.ms.rottentomatomovie;
 
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -18,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -25,25 +23,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.milansamardzic.ms.RemoteImageView;
+import com.facebook.AppEventsLogger;
 import com.milansamardzic.ms.navigationdrawer.CustomNavDraw;
-import com.milansamardzic.ms.objects.Movie;
 
-
-import org.acra.annotation.ReportsCrashes;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import static android.graphics.Color.parseColor;
@@ -61,6 +51,21 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
              super.onCreate(savedInstanceState);
+
+        //--
+        try{
+            PackageInfo info = getPackageManager().getPackageInfo("com.milansamardzic.ms.rottentomatomovie", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+        //--
 
         android.app.ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(parseColor("#ce5043")));
@@ -86,6 +91,22 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class BoxOffice extends Sve {
             if(i==0) {
                 i = 50;
             }
+
         Log.d("box", String.valueOf(i));
         String link = "lists/movies/box_office.json?limit=" + String.valueOf(i) + "&country=us";
         return link;
